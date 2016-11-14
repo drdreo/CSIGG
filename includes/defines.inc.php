@@ -5,7 +5,7 @@
 /*
  * Title of the website
  */
-define("TITLE","CSIGG");
+define("TITLE","CSIGG223232");
 define("SUBTITLE","CheatSheet and Infographic Generator");
 
 /**
