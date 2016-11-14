@@ -1,29 +1,59 @@
+<?php
+/* Smarty version 3.1.30, created on 2016-11-14 16:22:22
+  from "/Applications/XAMPP/xamppfiles/htdocs/CSIGG/normform/basetemplates/header.tpl" */
+
+/* @var Smarty_Internal_Template $_smarty_tpl */
+if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
+  'version' => '3.1.30',
+  'unifunc' => 'content_5829d6ae8f3308_80503302',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    'e732c048a15eaff9e6226011622b272a0618f642' => 
+    array (
+      0 => '/Applications/XAMPP/xamppfiles/htdocs/CSIGG/normform/basetemplates/header.tpl',
+      1 => 1479136941,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+  ),
+),false)) {
+function content_5829d6ae8f3308_80503302 (Smarty_Internal_Template $_smarty_tpl) {
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <title><?php echo @constant('TITLE');?>
+</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Dashboard Template for Bootstrap</title>
-
     <!-- Bootstrap core CSS -->
     <link href="/CSIGG/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- CSS import -->
+    <link rel="stylesheet" href="<?php echo @constant('CSSPATH');?>
+/main.css">
     <!-- Custom styles for this template -->
     <link href="/CSIGG/css/dashboard.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <?php echo '<script'; ?>
+ src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"><?php echo '</script'; ?>
+>
     <![endif]-->
 </head>
-
 <body>
 <header>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -58,28 +88,5 @@
             </div>
         </div>
     </div>
-</header>
-
-<div class="col-md-10 col-md-offset-2 main">
-    <h1 class="page-header">CS Generator</h1>
-    <div class="">
-        <span onmouseup="$('#alert').toggle();">DRÜCK MICH</span>
-        <div id="alert" class="alert alert-success" style="display:none;">
-            <strong>HOLY!</strong> G U A C A M O L Y
-        </div>
-    </div>
-</div>
-
-
-</div>
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-<script src="/CSIGG/js/bootstrap/bootstrap.min.js"></script>
-
-</body>
-</html>
+</header><?php }
+}
