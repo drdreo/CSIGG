@@ -1,0 +1,1 @@
+{include file="{$smarty.const.TNTEMPLATEPATH}header.tpl"}
