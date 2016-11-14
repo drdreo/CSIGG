@@ -11,10 +11,12 @@
     <link rel="icon" href="../../favicon.ico">
 
     <!-- Bootstrap core CSS -->
-    <link href="/CSIGG/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/CSIGG/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- CSS import -->
     <link rel="stylesheet" href="{$smarty.const.CSSPATH}/main.css">
+    <!-- Custom styles for this template -->
+    <link href="/CSIGG/css/dashboard.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -42,9 +44,6 @@
                     <li><a href="#">Profile</a></li>
                     <li><a href="#">Help</a></li>
                 </ul>
-            </div>
-            <div class="Header-logout">
-                {if isset($smarty.session.ISLOGGEDIN)}<span> Your are Logged In as {if isset($smarty.session.first_name)}{$smarty.session.first_name}{/if} {if isset($smarty.session.last_name)}{$smarty.session.last_name}{/if} : <a href="logout.php">Logout</a></span> {else}<span> <a href="login.php">Login</a></span> {/if}<span></span>
             </div>
         </div>
     </nav>

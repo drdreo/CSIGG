@@ -197,5 +197,7 @@ try {
     $shop->normForm();
 } catch (DatabaseException $e) {
     echo $e->getMessage();
-} catch (Exception $e) {
+}
+catch (Exception $e) {
+
 }

@@ -1,3 +1,2 @@
 {include file="{$smarty.const.TNTEMPLATEPATH}header.tpl"}
-{$firstname}
-<h2> FIRSTNAME</h2>
+{include file="{$smarty.const.TNTEMPLATEPATH}footer.tpl"}
