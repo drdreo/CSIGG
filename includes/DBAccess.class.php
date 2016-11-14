@@ -354,7 +354,7 @@ ERRORPAGE;
             error_log($formatedError,0);
             // Umlenken auf eine neutrale Errorseite, die den Benutzer über das Problem informiert
             // Diesen Zweig kann man testen, indem man die Datenbank nicht startet und DEBUG=false setzt @see includes/defines.inc.php
-            header ("Location: https://localhost/onlineshop/errorpage.html");
+            header ("Location: https://localhost/csigg/errorpage.html");
             exit;
         }
     }

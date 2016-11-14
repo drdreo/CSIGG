@@ -27,7 +27,6 @@ require_once DBACCESS;
 
 final class Profile extends TNormForm {
 
-
     /**
      * @var string $dbAccess Datenbankhandler für den Datenbankzugriff
      */
@@ -198,5 +197,7 @@ try {
     $shop->normForm();
 } catch (DatabaseException $e) {
     echo $e->getMessage();
-} catch (Exception $e) {
+}
+catch (Exception $e) {
+    echo $e;
 }
