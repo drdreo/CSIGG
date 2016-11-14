@@ -27,7 +27,6 @@ require_once DBACCESS;
 
 final class Profile extends TNormForm {
 
-
     /**
      * @var string $dbAccess Datenbankhandler für den Datenbankzugriff
      */
