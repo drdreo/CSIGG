@@ -8,7 +8,7 @@
  * @var bool DEBUG gibt an, ob Fehlermeldungen im Browser ausgegeben werden sollen (TRUE) oder mit error_log() (FALSE).
  */
 //define("DEBUG",TRUE);     // Fehler im Browser ausgeben
-define("DEBUG",FALSE); // Fehler mit error_log() schreiben
+define("DEBUG",false); // Fehler mit error_log() schreiben
 
 /*
  * Smarty Constants

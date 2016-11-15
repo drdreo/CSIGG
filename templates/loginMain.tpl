@@ -1,5 +1,4 @@
 {include file="{$smarty.const.TNTEMPLATEPATH}header.tpl"}
-{include file="{$smarty.const.SHOPTEMPLATEPATH}navigation.tpl"}
 <main class="Site-content">
     <section class="Section">
         <div class="Container">
