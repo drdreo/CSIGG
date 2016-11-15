@@ -176,5 +176,6 @@ try {
 } catch (DatabaseException $e) {
     echo $e->getMessage();
 } catch (Exception $e) {
+
    echo $e;
 }
