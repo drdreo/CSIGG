@@ -65,8 +65,8 @@ final class Login extends TNormForm {
      */
     protected function prepareFormFields() {
         $this->smarty->assign("emailKey", self::EMAIL);
-        $this->smarty->assign("passwordKey", self::PASSWORD);
         $this->smarty->assign("emailValue", $this->autofillFormField(self::EMAIL));
+        $this->smarty->assign("passwordKey", self::PASSWORD);
 
     }
 
@@ -145,18 +145,19 @@ EOL;
 
         $this->dbAccess->prepareQuery($sql_query);
         $this->dbAccess->executeStmt(array(':email'=> $_POST[self::EMAIL]));
-        $rows = $this->dbAccess->fetchResultset();
+        $row = $this->dbAccess->fetchSingle();
 
-        if(count($rows)===1 && Utilities::proofPWD($_POST[self::PASSWORD],$rows[0]['password']))
+        if(count($row)===1 && Utilities::proofPWD($_POST[self::PASSWORD],$row['password']))
         {
-            $_SESSION['iduser'] = $rows[0]['iduser'];
+            $_SESSION['iduser'] = $row['iduser'];
             $_SESSION[ISLOGGEDIN] = sha1($_SERVER["REMOTE_ADDR"] . $_SERVER["HTTP_USER_AGENT"] . $_SESSION['iduser']);
-            $_SESSION['first_name'] = $rows[0]['first_name'];
-            $_SESSION['last_name'] = $rows[0]['last_name'];
+            $_SESSION['first_name'] = $row['first_name'];
+            $_SESSION['last_name'] = $row['last_name'];
 
             return true;
         }
-        else{
+        else
+            {
             return false;
         }
     }
