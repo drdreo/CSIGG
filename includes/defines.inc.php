@@ -14,7 +14,7 @@ define("SUBTITLE","CheatSheet and Infographic Generator");
 define("NORMPATH","normform/");
 define("UTILITIES",NORMPATH . "Utilities.class.php");
 define("TNORMFORM",NORMPATH . "TNormform.class.php");
-define("CSSPATH",NORMPATH . "css");
+define("CSSPATH","css");
 define("TNTEMPLATEPATH",NORMPATH . "basetemplates/");
 define("DBACCESS","includes/DBAccess.class.php");
 define("SHOPTEMPLATEPATH", "includes/basetemplates/");

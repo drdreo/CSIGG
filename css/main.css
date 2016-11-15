@@ -22,4 +22,5 @@
 @import "bootstrap/css/bootstrap.css";
 /*Dashboard*/
 @import "dashboard.css";
-@import "AdminLTE.css";
+/*@import url("AdminLTE.css");*/
+
