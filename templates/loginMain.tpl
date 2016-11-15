@@ -1,7 +1,8 @@
 {include file="{$smarty.const.TNTEMPLATEPATH}header.tpl"}
 
-<body style="text-align: center;">
-<div class="col-md-4 col-md-offset-4 login">
+
+<body class="" style="text-align: center;">
+<div class="col-md-4 col-md-offset-4">
     <div class="login-logo">
         <p><b>CSIGG</b></p>
     </div>

@@ -1,9 +1,10 @@
 {include file="{$smarty.const.TNTEMPLATEPATH}header.tpl"}
-{include file="{$smarty.const.SHOPTEMPLATEPATH}navigation.tpl"}
+
+<body>
 <main class="Site-content">
     <section class="Section">
         <div class="Container">
-            <h2 class="Section-heading">Register for an OnlineShop account</h2>
+            <h2 class="Section-heading">Register for a CSIGG account</h2>
             {include file="{$smarty.const.TNTEMPLATEPATH}error.tpl"}
             <form action="{$smarty.server.SCRIPT_NAME}" method="post" enctype="multipart/form-data">
                 <div class="InputCombo Grid-full">
@@ -22,19 +23,7 @@
                     <label for="{$emailKey}" class="InputCombo-label">Email:</label>
                     <input type="email" id="{$emailKey}" name="{$emailKey}" value="{if isset($emailValue)}{$emailValue}{/if}" class="InputCombo-field">
                 </div>
-                <p> Format: +43 732 1234-1234 </p>
-                <div class="InputCombo Grid-full">
-                    <label for="{$phoneKey}" class="InputCombo-label">Phone:</label>
-                    <input type="text" id="{$phoneKey}" name="{$phoneKey}" value="{if isset($phoneValue)}{$phoneValue}{/if}" class="InputCombo-field">
-                </div>
-                <div class="InputCombo Grid-full">
-                    <label for="{$mobileKey}" class="InputCombo-label">Mobile:</label>
-                    <input type="text" id="{$mobileKey}" name="{$mobileKey}" value="{if isset($mobileValue)}{$mobileValue}{/if}" class="InputCombo-field">
-                </div>
-                <div class="InputCombo Grid-full">
-                    <label for="{$faxKey}" class="InputCombo-label">Fax:</label>
-                    <input type="text" id="{$faxKey}" name="{$faxKey}" value="{if isset($faxValue)}{$faxValue}{/if}" class="InputCombo-field">
-                </div>
+
                 <p> Use only letters, numbers, and the underscore. Must be between {$smarty.const.PWDMIN} and {$smarty.const.PWDMAX} characters long. </p>
                 <div class="InputCombo Grid-full">
                     <label for="{$passwordKey1}" class="InputCombo-label">Password:</label>
@@ -57,4 +46,5 @@
         </div>
     </section>
 </main>
-{include file="{$smarty.const.TNTEMPLATEPATH}footer.tpl"}
+</body>
+</html>
