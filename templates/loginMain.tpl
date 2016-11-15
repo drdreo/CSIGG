@@ -1,29 +1,45 @@
 {include file="{$smarty.const.TNTEMPLATEPATH}header.tpl"}
-<main class="Site-content">
-    <section class="Section">
-        <div class="Container">
-            <h2 class="Section-heading">Login</h2>
-            {include file="{$smarty.const.TNTEMPLATEPATH}error.tpl"}
-            <form action="{$smarty.server.SCRIPT_NAME}" method="post" enctype="multipart/form-data">
-                <div class="InputCombo Grid-full">
-                    <label for="{$emailKey}" class="InputCombo-label">Email:</label>
-                    <input type="text" id="{$emailKey}" name="{$emailKey}" value="{if isset($emailValue)}{$emailValue}{/if}" class="InputCombo-field">
+
+
+<body class="" style="text-align: center;">
+<div class="col-md-4 col-md-offset-4">
+    <div class="login-logo">
+        <p><b>CSIGG</b></p>
+    </div>
+    {include file="{$smarty.const.TNTEMPLATEPATH}error.tpl"}
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+
+        <form action="{$smarty.server.SCRIPT_NAME}" method="post" enctype="multipart/form-data">
+            <div class="form-group has-feedback">
+                <input id="{$emailKey}" name="{$emailKey}"  type="email" class="form-control" placeholder="Email" value="{if isset($emailValue)}{$emailValue}{/if}">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" id="{$passwordKey}" name="{$passwordKey}" class="form-control" placeholder="Password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-7 col-xs-push-1">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Remember Me
+                        </label>
+                    </div>
                 </div>
-                <div class="InputCombo Grid-full">
-                    <label for="{$passwordKey}" class="InputCombo-label">Password:</label>
-                    <input type="password" id="{$passwordKey}" name="{$passwordKey}" class="InputCombo-field">
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                 </div>
-                <div class="Grid-full">
-                    <button type="submit" class="Button">Log me in</button>
-                </div>
-            </form>
-        </div>
-    </section>
-    <section class="Section">
-        <div class="Container">
-            <h2 class="Section-heading">No account<i class="fa fa-question"></i></h2>
-            <p>Register your OnlineShop account <a href="register.php">here</a></p>
-        </div>
-    </section>
-</main>
-{include file="{$smarty.const.TNTEMPLATEPATH}footer.tpl"}
+                <!-- /.col -->
+            </div>
+        </form>
+        <div class="social-auth-links text-center">
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+</body>
+</html>
