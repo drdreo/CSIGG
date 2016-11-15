@@ -10,31 +10,41 @@
 
     <form action="{$smarty.server.SCRIPT_NAME}" method="post" enctype="multipart/form-data">
 
-        <div class="InputCombo Grid-full">
-            <input type="text" id="{$firstnameKey}" name="{$firstnameKey}" class="form-control" placeholder="first name" value="{if isset($firstnameValue)}{$firstnameValue}{/if}">
+        <div>
+            <input type="text" id="{$firstnameKey}" name="{$firstnameKey}" class="form-control" placeholder="Firstname" value="{if isset($firstnameValue)}{$firstnameValue}{/if}">
         </div>
 
-        <div class="InputCombo Grid-full">
+        <div>
             <input type="text" id="{$lastnameKey}" name="{$lastnameKey}" class="form-control" placeholder="Lastname" value="{if isset($lastnameValue)}{$lastnameValue}{/if}">
         </div>
 
-        <div class="InputCombo Grid-full">
+        <div>
             <input type="text" id="{$usernameKey}" name="{$usernameKey}" class="form-control" placeholder="Username" value="{if isset($usernameValue)}{$usernameValue}{/if}">
         </div>
 
-        <div class="InputCombo Grid-full">
+        <div>
             <input type="email" id="{$emailKey}" name="{$emailKey}" class="form-control" placeholder="Email" value="{if isset($emailValue)}{$emailValue}{/if}">
         </div>
 
-        <div class="InputCombo Grid-full">
+        <div>
             <input type="password" id="{$passwordKey1}" class="form-control" placeholder="Password" name="{$passwordKey1}">
         </div>
 
-        <div class="InputCombo Grid-full">
-            <input type="password" id="{$passwordKey2}" class="form-control" placeholder="repeat Password" name="{$passwordKey2}">
+        <div>
+            <input type="password" id="{$passwordKey2}" class="form-control" placeholder="Password repeat" name="{$passwordKey2}">
         </div>
 
-        <div class="Grid-full">
+
+        <div class="col-xs-7">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> Get your own Newsletter.
+                </label>
+            </div>
+        </div>
+
+
+        <div class="col-xs-7">
             <button type="submit" class="btn btn-primary btn-block btn-flat">Create my account.</button>
         </div>
     </form>
