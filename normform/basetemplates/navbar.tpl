@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar ">
                 <ul class="nav nav-sidebar">
-                    <li class="active"><a href="#">CheatSheet</a></li>
+                    <li><a href="#">CheatSheet</a></li>
                     <li><a href="#">InfoGraphic</a></li>
                 </ul>
             </div>
