@@ -25,19 +25,18 @@ require_once DBACCESS;
  * @version 2016
  */
 
-final class Profile extends TNormForm {
+final class Login extends TNormForm {
 
     /**
      * @var string $dbAccess Datenbankhandler für den Datenbankzugriff
      */
     private $dbAccess;
+    /**
+     *  Konstanten für ein HTML Attribute <input name='email' id='email' ... >, <label for='email' ... > --> $_POST[EMAIL].
+     */
+    const EMAIL = "email";
+    const PASSWORD = "password";
 
-    private $firstname;
-    private $lastname;
-    private $username;
-    private $email;
-    private $password;
-    private $uid;
     /**
      * Shop Constructor.
      *
@@ -65,13 +64,10 @@ final class Profile extends TNormForm {
      * Abstracte Methode in der Klasse TNormform und muss daher hier implementiert werden
      */
     protected function prepareFormFields() {
+        $this->smarty->assign("emailKey", self::EMAIL);
+        $this->smarty->assign("passwordKey", self::PASSWORD);
+        $this->smarty->assign("emailValue", $this->autofillFormField(self::EMAIL));
 
-        $this->fillPage();
-        $this->smarty->assign('firstname', $this->firstname);
-        $this->smarty->assign('lastname', $this->lastname);
-        $this->smarty->assign('username', $this->username);
-        $this->smarty->assign('email', $this->email);
-        $this->smarty->assign('password', $this->password);
     }
 
     /**
@@ -81,7 +77,7 @@ final class Profile extends TNormForm {
      */
     protected function display() {
 
-        $this->smarty->display('index.tpl');
+        $this->smarty->display('loginMain.tpl');
     }
 
     /**
@@ -100,9 +96,20 @@ final class Profile extends TNormForm {
      * @return bool true, wenn $errMsg leer ist. Ansonsten false
      */
     protected function isValid() {
-        /*--
-        require_once 'solution/index/isValid.inc.php';
-        //*/
+        if ($this->isEmptyPostField(self::EMAIL)) {
+            $this->errMsg[self::EMAIL] = "Please enter a Email address.";
+        }
+        if (!$this->isEmptyPostField(self::EMAIL) && !Utilities::isEmail($_POST[self::EMAIL])) {
+            $this->errMsg[self::EMAIL] = "Please enter a valid Email address.";
+        }
+        if ($this->isEmptyPostField(self::PASSWORD)) {
+            $this->errMsg[self::PASSWORD] = "Please enter a password.";
+        }
+        if (!$this->isEmptyPostField(self::EMAIL) && !$this->isEmptyPostField(self::PASSWORD) && !$this->authenticateUser($_POST[self::EMAIL],$_POST[self::PASSWORD]))
+        {
+            $this->errMsg[self::PASSWORD] = "Invalid Username or Password.";
+        }
+
         return (count($this->errMsg) === 0);
     }
 
@@ -123,68 +130,38 @@ final class Profile extends TNormForm {
      *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
      */
     protected function process() {
-        return true;
-        $this->changeUser();
-        $this->statusMsg = "User $this->uid changed successfully";
-    }
-
-    /**
-     * Befüllt das Array um alle Produkte aufzulisten, die auf der aktuellen Seite angezeigt werden.
-     *
-     * Es werden nur aktive Produkte berücksichtigt, bei denen die Spalte onlineshop.product.active='1' ist.
-     *
-     * Es werden nur die Produkte gelesen, die dem Suchkriterium entsprechen. Das Suchkriterium aus dem Suchfeld (GET-Formular) kann leer sein.
-     * Dann gibt es keine Einschränkung.
-     * Suchfelder über die LIKE-Klausel sind die Spalten onlineshop.product_name, .short_description, long_description.
-     * Der Suchbegriff wird in @see Shop::setSearch() ermittelt.
-     *
-     * Der Startwert der LIMIT-Klausel wird in @see Shop::setPaginationParameters() ermittelt.
-     *
-     * Weiters werden die Datensätze in der mittels $_GET[self::SORT] geschickten Sortierreihenfolge ausgegeben (ORDER BY).
-     * Die Sortierreihenfolge wird durch @see Shop::setOrderBy() ermittelt.
-     *
-     * Es werden so viele Sätze gelesen, wie in der Konstante DISPLAY festgelegt. @see includes/defines.inc.php
-     *
-     * @throws DatabaseException Diese wird von allen $this->dbAccess Methoden geworfen und hier nicht behandelt.
-     *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
-     */
-    private function fillPage() {
-
-        $sql_query = <<< SQL
-        SELECT *
-        FROM
-        USER
-        WHERE iduser = :uid
-SQL;
-//        TODO
-//        Connect to database and fill user data
-        $this->firstname ="";
-        $this->lastname="";
-        $this->username="";
-        $this->email="";
-        $this->password="";
+        Utilities::redirectTo();
     }
 
 
+    private function authenticateUser($email,$password) {
 
+        $sql_query = <<<EOL
+        SELECT iduser, first_name, last_name, password
+        FROM user
+        WHERE email = :email
+        AND active IS NULL
+EOL;
 
+        $this->dbAccess->prepareQuery($sql_query);
+        $this->dbAccess->executeStmt(array(':email'=> $_POST[self::EMAIL]));
+        $rows = $this->dbAccess->fetchResultset();
 
+        if(count($rows)===1 && Utilities::proofPWD($_POST[self::PASSWORD],$rows[0]['password']))
+        {
+            $_SESSION['iduser'] = $rows[0]['iduser'];
+            $_SESSION[ISLOGGEDIN] = sha1($_SERVER["REMOTE_ADDR"] . $_SERVER["HTTP_USER_AGENT"] . $_SESSION['iduser']);
+            $_SESSION['first_name'] = $rows[0]['first_name'];
+            $_SESSION['last_name'] = $rows[0]['last_name'];
 
-    /**
-     * Schreibt die Bestellung in den Warenkorb Tabelle onlineshop.cart
-     *
-     * Nur der erste Eintrag im Array wird in den Warenkorb gelegt. Der Aufruf von break schadet nicht an dieser Stelle.
-     * An sich ist durch den Aufruf des submit-Buttons sicher gestellt, dass es nur einen Eintrag gibt.
-     * Allerdings werden dadurch Manipulationen des Requests mit mehreren Einträgen im Array $_POST[self::PID] verhindert.
-     *
-     * @throws DatabaseException Diese wird von allen $this->dbAccess Methoden geworfen und hier nicht behandelt.
-     *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
-     */
-    private function changeUser() {
-
-        return true;
-
+            return true;
+        }
+        else{
+            return false;
+        }
     }
+
+
 }
 /**
  * Instantiieren der Klasse Shop und Aufruf der Methode TNormform::normForm()
@@ -193,19 +170,11 @@ SQL;
  * Bei PHP-Exception wird vorerst nur auf eine allgemeine Errorpage weitergeleitet
  */
 try {
-    $shop = new Profile();
-    $shop->normForm();
+    Utilities::redirectTo();
+    $login = new Login();
+    $login->normForm();
 } catch (DatabaseException $e) {
     echo $e->getMessage();
-}
-catch (Exception $e) {
-<<<<<<< HEAD
-    echo $e;
-=======
-<<<<<<< HEAD
-
-=======
-    echo $e;
->>>>>>> Index-changes
->>>>>>> master
+} catch (Exception $e) {
+   echo $e;
 }
