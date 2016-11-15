@@ -199,5 +199,4 @@ try {
     echo $e->getMessage();
 }
 catch (Exception $e) {
-    echo $e;
 }
