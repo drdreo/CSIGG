@@ -137,22 +137,20 @@ final class Login extends TNormForm {
     private function authenticateUser($email,$password) {
 
         $sql_query = <<<EOL
-        SELECT iduser, first_name, last_name, password
+        SELECT iduser, user_name, password
         FROM user
-        WHERE email = :email
-        AND active IS NULL
+        WHERE email_adr = :email
 EOL;
 
         $this->dbAccess->prepareQuery($sql_query);
         $this->dbAccess->executeStmt(array(':email'=> $_POST[self::EMAIL]));
         $row = $this->dbAccess->fetchSingle();
 
-        if(count($row)===1 && Utilities::proofPWD($_POST[self::PASSWORD],$row['password']))
+        if(Utilities::proofPWD($_POST[self::PASSWORD],$row['password']))
         {
             $_SESSION['iduser'] = $row['iduser'];
             $_SESSION[ISLOGGEDIN] = sha1($_SERVER["REMOTE_ADDR"] . $_SERVER["HTTP_USER_AGENT"] . $_SESSION['iduser']);
-            $_SESSION['first_name'] = $row['first_name'];
-            $_SESSION['last_name'] = $row['last_name'];
+            $_SESSION['user_name'] = $row['user_name'];
 
             return true;
         }
