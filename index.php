@@ -199,5 +199,13 @@ try {
     echo $e->getMessage();
 }
 catch (Exception $e) {
+<<<<<<< HEAD
     echo $e;
+=======
+<<<<<<< HEAD
+
+=======
+    echo $e;
+>>>>>>> Index-changes
+>>>>>>> master
 }
