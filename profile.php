@@ -25,7 +25,7 @@ require_once DBACCESS;
  * @version 2016
  */
 
-final class Index extends TNormForm {
+final class Profile extends TNormForm {
 
     /**
      * @var string $dbAccess Datenbankhandler für den Datenbankzugriff
@@ -81,7 +81,7 @@ final class Index extends TNormForm {
      */
     protected function display() {
 
-        $this->smarty->display('index.tpl');
+        $this->smarty->display('profile.tpl');
     }
 
     /**
@@ -100,9 +100,8 @@ final class Index extends TNormForm {
      * @return bool true, wenn $errMsg leer ist. Ansonsten false
      */
     protected function isValid() {
-        /*--
-        require_once 'solution/index/isValid.inc.php';
-        //*/
+
+
         return (count($this->errMsg) === 0);
     }
 
@@ -165,21 +164,6 @@ SQL;
         $this->password="";
     }
 
-
-
-
-
-
-    /**
-     * Schreibt die Bestellung in den Warenkorb Tabelle onlineshop.cart
-     *
-     * Nur der erste Eintrag im Array wird in den Warenkorb gelegt. Der Aufruf von break schadet nicht an dieser Stelle.
-     * An sich ist durch den Aufruf des submit-Buttons sicher gestellt, dass es nur einen Eintrag gibt.
-     * Allerdings werden dadurch Manipulationen des Requests mit mehreren Einträgen im Array $_POST[self::PID] verhindert.
-     *
-     * @throws DatabaseException Diese wird von allen $this->dbAccess Methoden geworfen und hier nicht behandelt.
-     *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
-     */
     private function changeUser() {
 
         return true;
@@ -193,7 +177,7 @@ SQL;
  * Bei PHP-Exception wird vorerst nur auf eine allgemeine Errorpage weitergeleitet
  */
 try {
-    $shop = new Index();
+    $shop = new Profile();
     $shop->normForm();
 } catch (DatabaseException $e) {
     echo $e->getMessage();

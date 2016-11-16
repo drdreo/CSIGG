@@ -13,8 +13,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- CSS import -->
+
     <link rel="stylesheet" href="{$smarty.const.CSSPATH}/main.css">
-    <link rel="stylesheet" href="/CSIGG/css/AdminLTE.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>

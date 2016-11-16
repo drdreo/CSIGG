@@ -1,23 +1,7 @@
-.Footer {
-    background-color: rgb(79, 78, 77);
-    color: rgb(245, 245, 245);
-    font-weight: 300;
-    padding: 1.5em;
-    text-align: center;
-}
-
-.Footer-version i:after {
-    content: "\00a0";
-}
-
-.Footer-credits, .Footer-version {
-    margin: 0;
-    font-size: 0.8em;
-}
-
-@media (min-width: 60em) {
-    .Footer--small {
-        display: flex;
-        justify-content: space-between;
-    }
+.main-footer {
+    background: #fff;
+    padding: 5px;
+    color: #444;
+    border-top: 1px solid #d2d6de;
+    margin-left: 200px;
 }

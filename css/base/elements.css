@@ -1,56 +1,35 @@
-* {
-    box-sizing: border-box;
-}
-
-html {
-    font: 400 1em "Source Sans Pro", sans-serif;
-    text-rendering: optimizeLegibility;
-    background-color: rgb(245, 245, 245);
-    color: rgb(0, 102, 102);
-}
-a {
-    color: #3c8dbc;
-}
-a:hover,
-a:active,
-a:focus {
-    outline: none;
-    text-decoration: none;
-    color: #72afd2;
-}
-
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-    padding-top: 50px;
-}
-body.hold-transition .content-wrapper
-{
-    /* Fix for IE */
-    -webkit-transition: none;
-    -o-transition: none;
-    transition: none;
-}
-
 /*
- * Main content
+ * Core: General Layout Style
+ * -------------------------
  */
-
-.main {
-    padding: 20px;
-}
-@media (min-width: 768px) {
-    .main {
-        padding-right: 40px;
-        padding-left: 40px;
-    }
-}
-.main .page-header {
-    margin-top: 0;
-}
-
-.content-wrapper{
-    margin-left: 0;
+html,
+body {
     min-height: 100%;
-    background-color: #ecf0f5;
-    z-index: 800;
 }
+.layout-boxed html,
+.layout-boxed body {
+    height: 100%;
+}
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.wrapper {
+    min-height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.wrapper:before,
+.wrapper:after {
+    content: " ";
+    display: table;
+}
+.wrapper:after {
+    clear: both;
+}
+
