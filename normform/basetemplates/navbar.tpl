@@ -17,7 +17,7 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="#">
+                        <a href="settings.php">
                             <span>Settings</span>
                         </a>
                     </li>
