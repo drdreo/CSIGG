@@ -67,7 +67,7 @@ final class Register extends TNormForm
         }
 
         if (!$this->isUniqueEmail($_POST[self::EMAIL])) {
-            $this->errMsg[self::EMAIL] = "Your email already exists.";
+            $this->errMsg[self::EMAIL] = "This email address already exists.";
         }
 
         if ($_POST[self::PASSWORD1] != $_POST[self::PASSWORD2]) {
@@ -87,12 +87,43 @@ final class Register extends TNormForm
 
     private function isUniqueEmail($email)
     {
-        return true;
+        $sql_query = <<<SQL
+        SELECT count(email_adr) AS email
+        FROM user 
+        WHERE email_adr = :email
+SQL;
+        $this->dbAccess->prepareQuery($sql_query);
+        $this->dbAccess->executeStmt(array(':email'=> $email));
+        $row = $this->dbAccess->fetchSingle();
+
+        if($row['email'] == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private function addUser()
     {
-        return true;
+        $password = password_hash($_POST[self::PASSWORD1],PASSWORD_DEFAULT);
+        $email = $_POST[self::EMAIL];
+        $username = $_POST[self::USERNAME];
+
+        if(isset($_POST[self::FIRSTNAME]))
+            $firstname = $_POST[self::FIRSTNAME];
+        if(isset($_POST[self::LASTNAME]))
+            $lastname = $_POST[self::LASTNAME];
+
+        $sql_query = <<< SQL
+        INSERT INTO user 
+        SET user_name = :username, email_adr = :email, password = :password
+SQL;
+        $this->dbAccess->prepareQuery($sql_query);
+        $this->dbAccess->executeStmt(array(':email'=> $email,':username'=> $username,':password'=> $password));
+
     }
 }
 

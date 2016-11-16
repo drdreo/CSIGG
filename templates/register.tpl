@@ -1,4 +1,4 @@
-{include file="{$smarty.const.TNTEMPLATEPATH}header.tpl"}  
+{include file="{$smarty.const.BASETEMPLATEPATH}header.tpl"}  
 
 <body class="hold-transition register-page"> 
 <div class="register-box">
@@ -10,7 +10,7 @@
     <div class="register-box-body">
         <p class="login-box-msg">Register as new member on CSIGG!</p>
 
-        {include file="{$smarty.const.TNTEMPLATEPATH}error.tpl"}
+        {include file="{$smarty.const.BASETEMPLATEPATH}error.tpl"}
 
         <form action="{$smarty.server.SCRIPT_NAME}" method="post" enctype="multipart/form-data">
             <div class="form-group has-feedback">

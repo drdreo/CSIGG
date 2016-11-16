@@ -77,7 +77,7 @@ final class Login extends TNormForm {
      */
     protected function display() {
 
-        $this->smarty->display('loginMain.tpl');
+        $this->smarty->display('login.tpl');
     }
 
     /**

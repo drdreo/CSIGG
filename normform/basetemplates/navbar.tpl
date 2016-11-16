@@ -4,14 +4,14 @@
 <header class="main-header navbar-color">
     <!-- Logo -->
     <span class="logo">
-        <span class="logo-lg"><b>CSIGG </b></span>
+        <span class="logo-lg" ><b>CSIGG </b></span>
     </span>
     <nav class="navbar">
         <!-- Header Navbar data here-->
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <li class="">
-                    <a href="#">
+                    <a href="profile.php">
                         <span>Profile</span>
                     </a>
                 </li>
@@ -30,12 +30,12 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             <li>
-                <a href="#">
+                <a href="cheatsheet.php">
                     <span>CheatSheets</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="infographic.php">
                     <span>InfoGraphics</span>
                 </a>
             </li>

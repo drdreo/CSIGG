@@ -58,6 +58,7 @@
 }
 
 .main-header .logo {
+    color: inherit;
     -webkit-transition: width 0.3s ease-in-out;
     -o-transition: width 0.3s ease-in-out;
     transition: width 0.3s ease-in-out;
@@ -74,6 +75,7 @@
     overflow: hidden;
     background-color: #008d4c !important;
 }
+
 .main-header .logo .logo-lg {
     display: block;
 }
