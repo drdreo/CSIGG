@@ -1,67 +1,81 @@
 {include file="{$smarty.const.TNTEMPLATEPATH}header.tpl"}  
 
 <body class="hold-transition register-page"> 
-<div class="register-box">  
+<div class="register-box">
 
-    <div class="register-logo"> 
-        <p><b>CSIGG</b></p> 
+    <div class="register-logo">
+        <p><b>CSIGG</b></p>
     </div>
-     <!-- /.login-logo -->  
 
-    <div class="register-box-body"> 
-        <p class="register-box-msg">Register</p>
+    <div class="register-box-body">
+        <p class="login-box-msg">Register as new member on CSIGG!</p>
 
-           {include file="{$smarty.const.TNTEMPLATEPATH}error.tpl"}  
+        {include file="{$smarty.const.TNTEMPLATEPATH}error.tpl"}
 
-        <form action="{$smarty.server.SCRIPT_NAME}" method="post" enctype="multipart/form-data"> 
-
-            <div class="form-group has-feedback"> 
-                <input id="{$firstnameKey}" name="{$firstnameKey}" type="text" class="form-control" placeholder="Firstname"  value="{if isset($emailValue)}{$emailValue}{/if}"> 
-
+        <form action="{$smarty.server.SCRIPT_NAME}" method="post" enctype="multipart/form-data">
+            <div class="form-group has-feedback">
+                <input id="{$firstnameKey}" name="{$firstnameKey}"
+                       value="{if isset($firstnameValue)}{$firstnameValue}{/if}" type="text" class="form-control"
+                       placeholder="First name">
+                <i class="fa fa-user form-control-feedback has-feedback" aria-hidden="true"></i>
             </div>
-
-            <div class="form-group has-feedback"> 
-                <input id="{$lastnameKey}" name="{$lastnameKey}" type="text" class="form-control" placeholder="Lastname"  value="{if isset($emailValue)}{$emailValue}{/if}"> 
-
+            <div class="form-group has-feedback">
+                <input id="{$lastnameKey}" name="{$lastnameKey}"
+                        value="{if isset($lastnameValue)}{$lastnameValue}{/if}" type="text" class="form-control"
+                       placeholder="Last name">
+                <i class="fa fa-user form-control-feedback has-feedback" aria-hidden="true"></i>
             </div>
-
-            <div class="form-group has-feedback"> 
-                <input id="{$usernameKey}" name="{$usernameKey}" type="text" class="form-control" placeholder="Username"  value="{if isset($emailValue)}{$emailValue}{/if}"> 
-
+            <div class="form-group has-feedback">
+                <input id="{$usernameKey}" name="{$usernameKey}"
+                        value="{if isset($usernameValue)}{$usernameValue}{/if}" type="text" class="form-control"
+                       placeholder="User name">
+                <i class="fa fa-user form-control-feedback has-feedback" aria-hidden="true"></i>
             </div>
-
-            <div class="form-group has-feedback"> 
-                <input id="{$emailKey}" name="{$emailKey}" type="email" class="form-control" placeholder="Email"  value="{if isset($emailValue)}{$emailValue}{/if}"> 
-
+            <div class="form-group has-feedback">
+                <input id="{$emailKey}" name="{$emailKey}"  value="{if isset($emailValue)}{$emailValue}{/if}"
+                       type="email" class="form-control" placeholder="Email">
+                <i class="fa fa-envelope form-control-feedback has-feedback" aria-hidden="true"></i>
             </div>
-             
-            <div class="form-group has-feedback"> 
-                <input type="password" id="{$passwordKey1}" name="{$passwordKey1}" class="form-control"   placeholder="Password"> 
-
+            <div class="form-group has-feedback">
+                <input type="password" id="{$passwordKey1}" name="{$passwordKey1}" class="form-control"  
+                       placeholder="Password">
+                <i class="fa fa-lock form-control-feedback has-feedback" aria-hidden="true"></i>
             </div>
-             
-            <div class="form-group has-feedback"> 
-                <input type="password" id="{$passwordKey2}" name="{$passwordKey2}" class="form-control"   placeholder="Password repeat"> 
-
+            <div class="form-group has-feedback">
+                <input type="password" id="{$passwordKey2}" name="{$passwordKey2}" class="form-control"
+                       placeholder="Retype password">
+                <i class="fa fa-lock form-control-feedback has-feedback" aria-hidden="true"></i>
             </div>
-
-            <div class="row"> 
-                <div class="col-xs-7 col-xs-push-1"> 
-                    <div class="checkbox">  <label>  <input type="checkbox"> Say yes to our super cool Newsletter.  </label> </div>
-                     
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <label>
+                            <div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false"
+                                 style="position: relative;"><input type="checkbox"
+                                                                    style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
+                                <ins class="iCheck-helper"
+                                     style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                            </div>
+                            I agree to the <a href="#">terms</a>
+                        </label>
+                    </div>
                 </div>
-                                 <!-- /.col --> 
-                <div class="col-xs-4"> 
+                <!-- /.col -->
+                <div class="col-xs-4">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
-                     
                 </div>
-                                 <!-- /.col --> 
+                <!-- /.col -->
             </div>
-             
         </form>
-         
+
+        <div class="social-auth-links text-center">
+            <p>- OR -</p>
+            <a href="login.php" class="text-center">I already have a membership</a>
+        </div>
+
+
     </div>
-     
+    <!-- /.form-box -->
 </div>
   
 </body> 

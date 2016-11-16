@@ -41,7 +41,7 @@
         </form>
         <div class="text-center">
             <p>- OR - </p>
-            <button class="btn btn-flat btn-warning"> REGISTER </button>
+            <a href="register.php" class="text-center">I do not have an Account yet</a>
         </div>
         <!-- /.login-box-body -->
     </div>
