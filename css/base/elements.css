@@ -6,10 +6,6 @@ html,
 body {
     min-height: 100%;
 }
-.layout-boxed html,
-.layout-boxed body {
-    height: 100%;
-}
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -35,9 +31,6 @@ body {
 
 .hide {
     display: none !important;
-}
-.no-border {
-    border: 0 !important;
 }
 .no-padding {
     padding: 0 !important;

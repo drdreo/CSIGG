@@ -1,5 +1,5 @@
-{include file="{$smarty.const.TNTEMPLATEPATH}header.tpl"}  
-{include file="{$smarty.const.TNTEMPLATEPATH}navbar.tpl"}
+{include file="{$smarty.const.BASETEMPLATEPATH}header.tpl"}  
+{include file="{$smarty.const.BASETEMPLATEPATH}navbar.tpl"}
 
 <div class="content-wrapper" style="min-height: 670px;">
     <div class="content-header col-md-12">
@@ -115,4 +115,4 @@
         </div>
     </div>
 
-{include file="{$smarty.const.TNTEMPLATEPATH}footer.tpl"}
+{include file="{$smarty.const.BASETEMPLATEPATH}footer.tpl"}

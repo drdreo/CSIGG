@@ -11,6 +11,16 @@
             <!-- Header Navbar data here-->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    <li class="pull-left  visible-xs">
+                        <a href="cheatsheet.php">
+                            <span>CS</span>
+                        </a>
+                    </li>
+                    <li class="pull-left  visible-xs">
+                        <a href="infographic.php">
+                            <span>IG</span>
+                        </a>
+                    </li>
                     <li class="">
                         <a href="profile.php">
                             <span>Profile</span>

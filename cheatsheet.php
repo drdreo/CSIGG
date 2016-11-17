@@ -25,19 +25,14 @@ require_once DBACCESS;
  * @version 2016
  */
 
-final class Index extends TNormForm {
+final class CheatSheet extends TNormForm {
 
     /**
      * @var string $dbAccess Datenbankhandler für den Datenbankzugriff
      */
     private $dbAccess;
 
-    private $firstname;
-    private $lastname;
-    private $username;
-    private $email;
-    private $password;
-    private $uid;
+
     /**
      * Shop Constructor.
      *
@@ -67,11 +62,7 @@ final class Index extends TNormForm {
     protected function prepareFormFields() {
 
         $this->fillPage();
-        $this->smarty->assign('firstname', $this->firstname);
-        $this->smarty->assign('lastname', $this->lastname);
-        $this->smarty->assign('username', $this->username);
-        $this->smarty->assign('email', $this->email);
-        $this->smarty->assign('password', $this->password);
+
     }
 
     /**
@@ -81,7 +72,7 @@ final class Index extends TNormForm {
      */
     protected function display() {
 
-        $this->smarty->display('index.tpl');
+        $this->smarty->display('cheatSheet.tpl');
     }
 
     /**
@@ -123,9 +114,10 @@ final class Index extends TNormForm {
      *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
      */
     protected function process() {
+        echo ($myfiles);
+        print_r($_FILES);
         return true;
-        $this->changeUser();
-        $this->statusMsg = "User $this->uid changed successfully";
+
     }
 
     /**
@@ -150,41 +142,10 @@ final class Index extends TNormForm {
      */
     private function fillPage() {
 
-        $sql_query = <<< SQL
-        SELECT *
-        FROM
-        USER
-        WHERE iduser = :uid
-SQL;
-//        TODO
-//        Connect to database and fill user data
-        $this->firstname ="";
-        $this->lastname="";
-        $this->username="";
-        $this->email="";
-        $this->password="";
     }
 
 
 
-
-
-
-    /**
-     * Schreibt die Bestellung in den Warenkorb Tabelle onlineshop.cart
-     *
-     * Nur der erste Eintrag im Array wird in den Warenkorb gelegt. Der Aufruf von break schadet nicht an dieser Stelle.
-     * An sich ist durch den Aufruf des submit-Buttons sicher gestellt, dass es nur einen Eintrag gibt.
-     * Allerdings werden dadurch Manipulationen des Requests mit mehreren Einträgen im Array $_POST[self::PID] verhindert.
-     *
-     * @throws DatabaseException Diese wird von allen $this->dbAccess Methoden geworfen und hier nicht behandelt.
-     *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
-     */
-    private function changeUser() {
-
-        return true;
-
-    }
 }
 /**
  * Instantiieren der Klasse Shop und Aufruf der Methode TNormform::normForm()
@@ -193,8 +154,8 @@ SQL;
  * Bei PHP-Exception wird vorerst nur auf eine allgemeine Errorpage weitergeleitet
  */
 try {
-    $index = new Index();
-    $index->normForm();
+    $cs = new CheatSheet();
+    $cs->normForm();
 } catch (DatabaseException $e) {
     echo $e->getMessage();
 }

@@ -9,7 +9,9 @@
 </footer>
 </div>
 {*--wrapper*}
+
 <script src="/CSIGG/js/jquery-1.12.2.js"></script>
+<script src="/CSIGG/js/dropzone.js"></script>
 <script src="/CSIGG/js/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
