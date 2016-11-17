@@ -4,8 +4,8 @@
     <div class="pull-right hidden-xs">
         <b>Version</b> 1
     </div>
-    <p>Created by <a href="mailto:andreas@fh-hagenberg.at">Andreas Hahn</a> and <a
-                href="mailto:sarah@fh-hagenberg.at">Sarah Schauppenlehner</a></p>
+    <strong>Created by <a href="mailto:andreas@fh-hagenberg.at">Andreas Hahn</a> and <a
+                href="mailto:sarah@fh-hagenberg.at">Sarah Schauppenlehner</a></strong>
 </footer>
 </div>
 {*--wrapper*}
