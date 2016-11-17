@@ -114,7 +114,7 @@ final class CheatSheet extends TNormForm {
      *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
      */
     protected function process() {
-        echo ($myfiles);
+
         print_r($_FILES);
         return true;
 

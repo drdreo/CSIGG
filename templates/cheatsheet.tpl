@@ -28,12 +28,41 @@
                 </div>
             </div>
             <div class="col-md-6">
+                {*Size picker*}
                 <div class="col-md-12">
                     <h4>Size <i class="fa fa-expand "></i></h4>
                     <div class="col-md-12">
-                        <div class="col-md-3 shadow" onclick="$(this).toggleClass('sizeSelector');"><span><b>Post It</b><br><small>76mm x 76mm</small></span></div>
-                        <div class="col-md-3 shadow" onclick="$(this).toggleClass('sizeSelector');"><span><b>Post It</b><br><small>76mm x 76mm</small></span></div>
-                        <div class="col-md-6 shadow" style="padding:5px;"><input class="form-control input-sm" type="text" placeholder="Enter dimensions"/></div>
+                        <div class="col-md-3 shadow" onclick="$(this).toggleClass('sizeSelector');"><span><b>Post It</b><br><small>76mm x 76mm</small></span>
+                        </div>
+                        <div class="col-md-3 shadow" onclick="$(this).toggleClass('sizeSelector');"><span><b>Post It</b><br><small>76mm x 76mm</small></span>
+                        </div>
+                        <div class="col-md-6 shadow" style="padding:5px;"><input class="form-control input-sm"
+                                                                                 type="text"
+                                                                                 placeholder="Enter dimensions"/></div>
+                    </div>
+                </div>
+                {*Color Picker*}
+                <div class="col-md-12">
+                    <h4>Color <i class="fa fa-eyedropper "></i></h4>
+                    <div class="col-md-12">
+                        <div id="colorpicker" class="input-group col-md-6 shadow" style="padding:5px;">
+                            <input type="text" value="#00AABB" class="form-control"/>
+                            <span class="input-group-addon"><i></i></span>
+                        </div>
+                    </div>
+                </div>
+                {*Font picker*}
+                <div class="col-md-12">
+                    <h4>Font <i class="fa fa-font "></i></h4>
+                    <div class="col-md-12">
+                        <div class="col-md-6 shadow" style="padding:5px;">
+                            <select class="form-control">
+                                <option value="Arial">Arial</option>
+                                <option value="Calibri">Calibri</option>
+                                <option value="Helvetica">Helvetica</option>
+                                <option value="Comic Sans">Comic Sans</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,6 +72,9 @@
 <script>
 
     $(document).ready(function () {
+//        Init the colorpicker input
+        $('#colorpicker').colorpicker();
+//        Init the dropzone
         Dropzone.autoDiscover = false;
         Dropzone.keepLocal = true;
         var $myDropzone = $("#my-dropzone");

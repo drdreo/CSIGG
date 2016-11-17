@@ -3,7 +3,7 @@
 @import "vendor/dropzone.css";
 /*Bootstrap*/
 @import "bootstrap/css/bootstrap.css";
-
+@import "bootstrap/colorpicker/bootstrap-colorpicker.min.css";
 @import "base/elements.css";
 
 @import "components/button.css";
