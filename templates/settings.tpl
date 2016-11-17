@@ -68,9 +68,9 @@
                 <div class="box-header with-border">
                     <h2 class="box-title">Follow us:</h2>
                     <div class="box-body">
-                        <a class="btn btn-social-icon btn-primary"><i class="fa fa-facebook"></i></a>
-                        <a class="btn btn-social-icon btn-info"><i class="fa fa-twitter"></i></a>
-                        <a class="btn btn-social-icon btn-primary"><i class="fa fa-instagram"></i></a>
+                        <a class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
+                        <a class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
+                        <a class="btn btn-social-icon btn-instagram"><i class="fa fa-instagram"></i></a>
 
                     </div>
 
@@ -104,7 +104,7 @@
                                 <input class="form-control" id ="betreff">
                                 <label for="comment">Message:</label>
                                 <textarea class="form-control" rows="4" id="comment"></textarea>
-                                <a href="mailto:andreas@fh-hagenberg.at"><button type="button" class="btn btn-sm btn-flat pull-right">Send</button></a>
+                                <a href="mailto:andreas@fh-hagenberg.at?subject=look at this website&body=Hi,"><button type="button" class="btn btn-sm btn-flat pull-right">Send</button></a>
                             </div>
                         </div>
                     </div>

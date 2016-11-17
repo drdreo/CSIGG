@@ -20,7 +20,8 @@
                 </div>
                 {*Text Upload Preview*}
                 <div class="col-md-12">
-                    <h3>Preview</h3>
+                    <h3 class="pull-left">Preview</h3>
+                    <button class="btn btn-flat btn-primary btn-sm pull-right" style="margin-top:15px;">Generate</button>
                     <div class="box no-border shadow" id="filePreview"
                          style="min-height:100px; max-height: 350px;overflow: scroll;">
 
