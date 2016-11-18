@@ -84,7 +84,7 @@
             maxFiles: 1,
             dictMaxFilesExceeded: "You may only upload 1 file.",
             maxFilesize: 5,
-            acceptedFiles: ".txt,.doc,.xml",
+            acceptedFiles: ".txt,.doc,.xml,.odt",
             dictInvalidFileType: "Only TXT Files supported yet.",
             addRemoveLinks: true,
             init: function () {

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'includes/defines.inc.php';
-require_once NORMPATH . 'session.inc.php';
+//require_once NORMPATH . 'session.inc.php';
 require_once TNORMFORM;
 require_once DBACCESS;
 
@@ -61,13 +61,16 @@ final class Register extends TNormForm
         if ($this->isEmptyPostField(self::PASSWORD1)) {
             $this->errMsg[self::PASSWORD1] = "Please enter a Password.";
         }
+        if (!$this->isEmptyPostField(self::PASSWORD1) && !Utilities::isPassword(self::PASSWORD1,5,20)) {
+            $this->errMsg[self::PASSWORD1] = "Please enter a valid Password with 5-20 characters.";
+        }
 
         if ($this->isEmptyPostField(self::PASSWORD2)) {
             $this->errMsg[self::PASSWORD2] = "Please repeat your Password.";
         }
 
         if (!$this->isUniqueEmail($_POST[self::EMAIL])) {
-            $this->errMsg[self::EMAIL] = "This email address already exists.";
+            $this->errMsg[self::EMAIL] = "This email address is already registered.";
         }
 
         if ($_POST[self::PASSWORD1] != $_POST[self::PASSWORD2]) {
@@ -108,21 +111,30 @@ SQL;
 
     private function addUser()
     {
-        $password = password_hash($_POST[self::PASSWORD1],PASSWORD_DEFAULT);
+        $password = Utilities::encryptPWD($_POST[self::PASSWORD1]);
+
         $email = $_POST[self::EMAIL];
         $username = $_POST[self::USERNAME];
 
-        if(isset($_POST[self::FIRSTNAME]))
-            $firstname = $_POST[self::FIRSTNAME];
-        if(isset($_POST[self::LASTNAME]))
-            $lastname = $_POST[self::LASTNAME];
+        $varArray = array(':email'=> $email,':username'=> $username,':password'=> $password);
+        $setVariables = "user_name = :username, email_adr = :email, password = :password";
+
+
+        if(!$this->isEmptyPostField(self::FIRSTNAME)) {
+            $varArray[":firstname"] = $_POST[self::FIRSTNAME];
+            $setVariables  .= ", first_name = :firstname";
+        }
+        if(!$this->isEmptyPostField(self::LASTNAME)) {
+            $varArray[":lastname"] = $_POST[self::LASTNAME];
+            $setVariables  .= ", last_name = :lastname";
+        }
 
         $sql_query = <<< SQL
         INSERT INTO user 
-        SET user_name = :username, email_adr = :email, password = :password
+        SET $setVariables
 SQL;
         $this->dbAccess->prepareQuery($sql_query);
-        $this->dbAccess->executeStmt(array(':email'=> $email,':username'=> $username,':password'=> $password));
+        $this->dbAccess->executeStmt($varArray);
 
     }
 }

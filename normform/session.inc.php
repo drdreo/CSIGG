@@ -4,7 +4,6 @@
  */
 session_start();
 
-// TODO: First, do the HTTP/HTTPS check and redirect as shown in the lecture notes.
 /**
  * XAMPP benutzt kein offizielles Zertifikat. Man kann es im Browser zu den Vertrauenswürdigen Zertifikaten hinzufügen, oder die Warnhinweise ignorieren
  * Aber Produktiv gehen sollte man mit diesem Zertifikat nicht.

@@ -16,24 +16,24 @@
             <div class="form-group has-feedback">
                 <input id="{$firstnameKey}" name="{$firstnameKey}"
                        value="{if isset($firstnameValue)}{$firstnameValue}{/if}" type="text" class="form-control"
-                       placeholder="First name">
+                       placeholder="First name"/>
                 <i class="fa fa-user form-control-feedback has-feedback" aria-hidden="true"></i>
             </div>
             <div class="form-group has-feedback">
-                <input id="{$lastnameKey}" name="{$lastnameKey}"
-                        value="{if isset($lastnameValue)}{$lastnameValue}{/if}" type="text" class="form-control"
-                       placeholder="Last name">
+                <input id="{$lastnameKey}" name="{$lastnameKey}" value="{if isset($lastnameValue)}{$lastnameValue}{/if}"
+                       type="text" class="form-control"
+                       placeholder="Last name"/>
                 <i class="fa fa-user form-control-feedback has-feedback" aria-hidden="true"></i>
             </div>
             <div class="form-group has-feedback">
-                <input id="{$usernameKey}" name="{$usernameKey}"
-                        value="{if isset($usernameValue)}{$usernameValue}{/if}" type="text" class="form-control"
-                       placeholder="User name">
+                <input id="{$usernameKey}" name="{$usernameKey}" value="{if isset($usernameValue)}{$usernameValue}{/if}"
+                       type="text" class="form-control"
+                       placeholder="User name"/>
                 <i class="fa fa-user form-control-feedback has-feedback" aria-hidden="true"></i>
             </div>
             <div class="form-group has-feedback">
-                <input id="{$emailKey}" name="{$emailKey}"  value="{if isset($emailValue)}{$emailValue}{/if}"
-                       type="email" class="form-control" placeholder="Email">
+                <input id="{$emailKey}" name="{$emailKey}" value="{if isset($emailValue)}{$emailValue}{/if}"
+                       type="email" class="form-control" placeholder="Email"/>
                 <i class="fa fa-envelope form-control-feedback has-feedback" aria-hidden="true"></i>
             </div>
             <div class="form-group has-feedback">
@@ -48,15 +48,12 @@
             </div>
             <div class="row">
                 <div class="col-xs-8">
-                    <div class="checkbox icheck">
+                    <div class="checkbox">
                         <label>
-                            <div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false"
-                                 style="position: relative;"><input type="checkbox"
-                                                                    style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
-                                <ins class="iCheck-helper"
-                                     style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                            <div style="position: relative;">
+                                <input type="checkbox">
+                                I agree to the <a href="#">terms</a>
                             </div>
-                            I agree to the <a href="#">terms</a>
                         </label>
                     </div>
                 </div>
