@@ -2,8 +2,10 @@
 {include file="{$smarty.const.BASETEMPLATEPATH}navbar.tpl"}
 
 <div class="content-wrapper" style="min-height: 700px;">
-    <div class="content-header col-md-12 box no-border">
-        <div class="box-header"><h3>Infographic</h3></div>
+    <div class="col-md-12 box no-border">
+        <div class="box-header">
+            <h3>Infographic</h3>
+        </div>
 
         <div class="box-body">
             <div class="col-md-6 border-right">
@@ -152,6 +154,44 @@
     $(document).ready(function () {
 //        Init the colorpicker input
         $('#colorpicker').colorpicker();
+//        Init the dropzone
+        Dropzone.autoDiscover = false;
+        Dropzone.keepLocal = true;
+        var $myDropzone = $("#my-dropzone");
+        $myDropzone.dropzone({
+            dictDefaultMessage: "Drag and Drop CheatSheets <br> -OR- <br> Click here",
+            maxFiles: 1,
+            dictMaxFilesExceeded: "You may only upload 1 file.",
+            maxFilesize: 5,
+            acceptedFiles: ".txt,.xml,.csv",
+            dictInvalidFileType: "Only Data Files supported yet.",
+            addRemoveLinks: true,
+            init: function () {
+                this.on('success', function (file, resp) {
+                    console.log(file);
+
+
+                    //Retrieve the first (and only!) File from the FileList object
+                    var f = file;
+
+                    if (f) {
+                        var r = new FileReader();
+                        r.onload = function (e) {
+                            var contents = e.target.result;
+                            console.log(contents);
+                            $('#filePreview').html(contents);
+                        };
+                        r.readAsText(f);
+                    } else {
+                        alert("Failed to load file");
+                    }
+                });
+
+
+            }
+
+
+        });
     });
 </script>
 {include file="{$smarty.const.BASETEMPLATEPATH}footer.tpl"}
