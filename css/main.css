@@ -1,5 +1,4 @@
 @import "vendor/normalize.css";
-@import "vendor/lightbox.css";
 @import "vendor/dropzone.css";
 /*Bootstrap*/
 @import "bootstrap/css/bootstrap.css";
@@ -22,8 +21,12 @@
 @import "utilities/shadow.css";
 @import "utilities/color.css";
 
+@media print{
 
-/*Dashboard*/
-/*@import "dashboard.css";*/
-/*@import "AdminLTE.css";*/
+    *{
+        color: #3366CC !important;
+        background-color: #00a65a !important;
+
+    }
+}
 

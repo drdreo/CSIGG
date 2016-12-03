@@ -8,9 +8,9 @@
     <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-yellow">
             <div class="inner">
-                <h3>44</h3>
+                <h3>{if isset($totalUser)}{$totalUser}{/if}</h3>
 
-                <p>User Registrations</p>
+                <p>User Registered</p>
             </div>
             <div class="icon">
                 <i class="fa fa-user-plus"></i>

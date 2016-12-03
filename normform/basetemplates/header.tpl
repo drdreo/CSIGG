@@ -15,6 +15,7 @@
     <!-- CSS import -->
 
     <link rel="stylesheet" href="{$smarty.const.CSSPATH}/main.css">
+    <link rel="stylesheet" type="text/css" media="print" href="{$smarty.const.CSSPATH}/bootstrap/css/bootstrap.min.css">
     <script src="/CSIGG/js/jquery-1.12.2.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
