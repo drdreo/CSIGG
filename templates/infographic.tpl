@@ -175,22 +175,26 @@
                     var f = file;
 
                     if (f) {
-                        var r = new FileReader();
-                        r.onload = function (e) {
-                            var contents = e.target.result;
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var contents = reader.result;
                             console.log(contents);
-                            $('#filePreview').html(contents);
+
+                            var url = "ajax_convert_csv.php";
+                            $.ajax({
+                                url: url,
+                                context: document.body
+                            }).success(function(request){
+                                console.log(request);
+                            });
+
                         };
                         r.readAsText(f);
                     } else {
                         alert("Failed to load file");
                     }
                 });
-
-
             }
-
-
         });
     });
 </script>

@@ -32,8 +32,6 @@ final class Infographic extends TNormForm {
      */
     private $dbAccess;
 
-    private $firstname;
-    private $lastname;
     private $username;
     private $email;
     private $password;
@@ -98,8 +96,8 @@ final class Infographic extends TNormForm {
      */
     protected function isValid() {
 
-
         return (count($this->errMsg) === 0);
+
     }
 
     /**
@@ -119,6 +117,7 @@ final class Infographic extends TNormForm {
      *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
      */
     protected function process() {
+        print_r ($_FILES );
         return true;
 
     }
@@ -144,13 +143,9 @@ final class Infographic extends TNormForm {
      *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
      */
     private function fillPage() {
-    }
-
-    private function changeUser() {
-
-        return true;
 
     }
+
 }
 /**
  * Instantiieren der Klasse Shop und Aufruf der Methode TNormform::normForm()
