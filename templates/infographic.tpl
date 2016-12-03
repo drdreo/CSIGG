@@ -127,7 +127,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-xs-3">
                         <h4>green</h4>
                         <div class="color-scheme"
                              onclick="$('.color-scheme').removeClass('color-scheme-selected');$(this).toggleClass('color-scheme-selected');">
@@ -138,10 +138,10 @@
                     </div>
 
                     {*Color Picker*}
-                    <div class="col-md-3">
-                        <h4>Color <i class="fa fa-eyedropper "></i></h4>
+                    <div class="col-md-3 col-xs-3">
+                        <h4>color <i class="fa fa-eyedropper "></i></h4>
                             <div id="colorpicker" class="input-group col-md-6">
-                                <input type="text" value="#00AABB" class="form-control"/>
+                                <input type="text" value="#00AABB" class="form-control" style="min-width: 70px;"/>
                                 <span class="input-group-addon"><i></i></span>
                             </div>
                     </div>
@@ -183,13 +183,15 @@
                             var url = "ajax_convert_csv.php";
                             $.ajax({
                                 url: url,
+                                type: 'POST',
+                                data: { text1: contents},
                                 context: document.body
                             }).success(function(request){
                                 console.log(request);
                             });
 
                         };
-                        r.readAsText(f);
+                        reader.readAsText(f);
                     } else {
                         alert("Failed to load file");
                     }
