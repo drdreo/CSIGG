@@ -19,7 +19,7 @@ define("BASETEMPLATEPATH",NORMPATH . "basetemplates/");
 define("TEMPLATEPATH","templates/");
 define("DBACCESS","includes/DBAccess.class.php");
 define("SHOPTEMPLATEPATH", "includes/basetemplates/");
-define("ICON","<i class=\"fa fa-shopping-bag\" aria-hidden=\"true\"></i>");
+//define("ICON","<i class=\"fa fa-shopping-bag\" aria-hidden=\"true\"></i>");
 
 /*
  * header forwards
@@ -39,7 +39,13 @@ define("REGISTER", "register.php");
  * @var string ISLOGGEDIN Key for the Value, stored in the Session; checks if a user is logged in
 */
 define("ISLOGGEDIN", "isloggedin");
-
+define("REDIRECT_PAGES",array(
+    "cheatsheet.php",
+    "infographic.php",
+    "profile.php",
+    "settings.php",
+    "index.php",
+    "contact.php")); // DAB3UE/DBA2UE
 
 /*
  * Connection and other parameters for database access

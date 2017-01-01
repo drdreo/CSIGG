@@ -154,6 +154,7 @@ final class CheatSheet extends TNormForm {
  * Bei PHP-Exception wird vorerst nur auf eine allgemeine Errorpage weitergeleitet
  */
 try {
+    Utilities::redirectTo();
     $cs = new CheatSheet();
     $cs->normForm();
 } catch (DatabaseException $e) {

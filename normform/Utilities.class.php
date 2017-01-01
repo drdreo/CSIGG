@@ -48,6 +48,22 @@ class Utilities {
                     $redirect = true;
                 }
                 break;
+            case in_array($page, REDIRECT_PAGES ):
+                if (!isset($_SESSION[ISLOGGEDIN]) || strcmp($_SESSION[ISLOGGEDIN], sha1( $_SERVER["REMOTE_ADDR"] . $_SERVER["HTTP_USER_AGENT"] . $_SESSION['iduser'])) !== 0) {
+                    // User ist noch nicht eingeloggt, daher zuerst zur Login-Seite und merken von welcher Seite man gekommen ist
+                    $_SESSION['redirect_url'] = basename($_SERVER['SCRIPT_NAME']);
+                    $page = LOGIN;
+                    $redirect = true;
+                } else {
+                    if (!(strcmp(basename($_SERVER['SCRIPT_NAME']), $page) === 0)) {
+                        // User ist eingeloggt und wird auf eine weitere geschützte Seite weitergeleitet (z.B. von index.php auf cheatsheet.php)
+                        $redirect = true;
+                    } else {
+                        // Jemand leitet ein Script auf sich selbst um, wir wollen aber keine Endlosschleife produzieren
+                        $redirect = false;
+                    }
+                }
+                break;
 
             default:
                 // Keine Umlenkung notwendig oder bereits eingeloggt

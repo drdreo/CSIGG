@@ -177,6 +177,7 @@ SQL;
  * Bei PHP-Exception wird vorerst nur auf eine allgemeine Errorpage weitergeleitet
  */
 try {
+    Utilities::redirectTo();
     $settings = new Settings();
     $settings->normForm();
 } catch (DatabaseException $e) {

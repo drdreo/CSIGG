@@ -154,6 +154,7 @@ final class Infographic extends TNormForm {
  * Bei PHP-Exception wird vorerst nur auf eine allgemeine Errorpage weitergeleitet
  */
 try {
+    Utilities::redirectTo();
     $infographic = new Infographic();
     $infographic->normForm();
 } catch (DatabaseException $e) {

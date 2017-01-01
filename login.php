@@ -175,6 +175,6 @@ try {
 } catch (DatabaseException $e) {
     echo $e->getMessage();
 } catch (Exception $e) {
-
+    header("Location: https://localhost/csigg/errorpage.html");
    echo $e;
 }
