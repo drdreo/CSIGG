@@ -4,7 +4,6 @@
     <div class="content-header col-l-12">
         <h1>Profile</h1>
     </div>
-
     {include file="{$smarty.const.TEMPLATEPATH}user_data_box.tpl"}
     {include file="{$smarty.const.TEMPLATEPATH}user_sheets_box.tpl"}
 
