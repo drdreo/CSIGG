@@ -1,14 +1,15 @@
-.content-wrapper,
-.right-side {
+.content-wrapper {
     min-height: 100%;
     background-color: #ecf0f5;
     z-index: 800;
+    position: relative;
 }
 .main-footer {
     background: #fff;
     padding: 15px;
     color: #444;
     border-top: 1px solid #d2d6de;
+
 }
 
 .content-wrapper,

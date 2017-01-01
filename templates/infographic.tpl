@@ -26,7 +26,8 @@
                     <button class="btn btn-flat btn-warning pull-right btn-sm" style="margin-top: 15px;">Render</button>
 
                     <div class="box no-border shadow" id="filePreview"
-                         style="min-height:100px; max-height: 350px;overflow: scroll;">
+                         style="min-height:100px; overflow: scroll;">
+                        <canvas id="myChart" width="400" height="400"></canvas>
                     </div>
                 </div>
 
@@ -43,7 +44,7 @@
                 </div>
 
                 {*Legend*}
-                <div  class="col-md-12" style="padding-bottom: 5px; color: #00a65a;">
+                <div class="col-md-12" style="padding-bottom: 5px; color: #00a65a;">
                     <h4>Legend</h4>
                     <div class="form-group">
                         <input type="text" class="form-control" id="legend" placeholder="Legend">
@@ -140,10 +141,10 @@
                     {*Color Picker*}
                     <div class="col-md-3 col-xs-3">
                         <h4>color <i class="fa fa-eyedropper "></i></h4>
-                            <div id="colorpicker" class="input-group col-md-6">
-                                <input type="text" value="#00AABB" class="form-control" style="min-width: 70px;"/>
-                                <span class="input-group-addon"><i></i></span>
-                            </div>
+                        <div id="colorpicker" class="input-group col-md-6">
+                            <input type="text" value="#00AABB" class="form-control" style="min-width: 70px;"/>
+                            <span class="input-group-addon"><i></i></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -186,7 +187,7 @@
                                 type: 'POST',
                                 data: { text1: contents},
                                 context: document.body
-                            }).success(function(request){
+                            }).success(function (request) {
                                 console.log(request);
                             });
 
@@ -196,6 +197,44 @@
                         alert("Failed to load file");
                     }
                 });
+            }
+        });
+
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
             }
         });
     });
