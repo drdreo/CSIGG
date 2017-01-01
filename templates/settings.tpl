@@ -7,7 +7,6 @@
         <h1><i class="fa fa-envelope"></i> Contact</h1>
     </div>
 
-
     <div class="col-md-12">
         <div class="col-md-8">
             <div class="box no-border shadow">
@@ -104,14 +103,12 @@
                                 <input class="form-control" id ="betreff">
                                 <label for="comment">Message:</label>
                                 <textarea class="form-control" rows="4" id="comment"></textarea>
-                                <a href="mailto:andreas@fh-hagenberg.at?subject=look at this website&body=Hi,"><button type="button" class="btn btn-sm btn-flat pull-right">Send</button></a>
+                                <a href="mailto:andreas@fh-hagenberg.at?subject=look at this website&body=Hi,"><button type="button" class="btn btn-sm btn-flat pull-right" style="margin-top: 10px;">Send</button></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 
