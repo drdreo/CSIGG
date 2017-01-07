@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="{$smarty.const.CSSPATH}/main.css">
     <link rel="stylesheet" type="text/css" media="print" href="{$smarty.const.CSSPATH}/bootstrap/css/bootstrap.min.css">
     <script src="/CSIGG/js/jquery-1.12.2.js"></script>
+    {*image canvas*}
+    <script src="/CSIGG/js/html2canvas.js"></script>
+    <script src="/CSIGG/js/html2canvas.svg.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>

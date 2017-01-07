@@ -34,18 +34,28 @@ function changeContainerSize(div) {
     preview.style.width = width + "mm";
     preview.style.height = height + "mm";
 
+    $("input[type=hidden]").each(function() {
+        var name = $(this).attr("name");
+        switch(name)
+        {
+            case "widthDimension" : $(this).val(width); break;
+            case "heightDimension" : $(this).val(height); break;
+        }
+    });
+
 
     formatTextSize(preview);
 }
+
 function checkFileLength(element) {
     var fits = true;
     if ((element.offsetHeight < element.scrollHeight) || (element.offsetWidth < element.scrollWidth)) {
         //element has overflow
-        element.style.border = "thick solid #FF0000";
+        element.style.border = "solid #FF0000";
         fits = false;
     }
     else {
-        element.style.border = "thick solid #00FF00";
+        element.style.border = "solid #00FF00";
         fits = true;
     }
 
@@ -79,6 +89,15 @@ function generateCheatSheet() {
     copyFormat(previewContent, printContent);
 
     window.print();
+
+    $('#cheatsheetData').val(previewContent.innerHTML);
+    // html2canvas([previewContent], {
+    //     onrendered: function(canvas) {
+    //         document.body.appendChild(canvas);
+    //         var data = canvas.toDataURL('image/png');
+    //
+    //     }
+    // });
 
 }
 

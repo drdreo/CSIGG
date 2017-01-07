@@ -88,8 +88,20 @@ final class CheatSheet extends TNormForm {
 
         //TODO: save cheatsheet as image in cheatsheet folder
 
-        $image = imagecreate(150, 150);
-        imagejpeg($image, "cheatsheets/file.jpg");
+        $image = imagecreatetruecolor($_POST['widthDimension'], $_POST['heightDimension']);
+//        $image = imagecreatefrompng($_POST['cheatsheetData']);
+        $text = $_POST['cheatsheetData'];
+        $color = imagecolorallocate($image, 0, 0, 0);
+
+        var_dump($_POST);
+
+        imagettftext ( $image ,  12 ,  0 ,  1 , 1 ,  $color ,  'helvetica' ,  $text );
+
+
+//        imagejpeg($image, "cheatsheets/file.jpg");
+        imagepng($image,"cheatsheets/file.jpg");
+        imagedestroy($image);
+
         $this->statusMsg = "Added CheatSheet successfully";
         return true;
 

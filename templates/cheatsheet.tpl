@@ -9,7 +9,6 @@
         <div class="box-body">
             {include file="{$smarty.const.BASETEMPLATEPATH}error.tpl"}
 
-
             <div class="col-md-6 border-right">
                 {*DropZone*}
                 <div class="col-md-12 hidden-print">
@@ -41,17 +40,19 @@
                 </div>
             </div>
             {*Printed CheatSheet*}
-            <div class="col-md-12 visible-print">
+            <div class="visible-print" style="position: static;">
                 <h3 style="color: #12FF12">CheatSheet</h3>
-                <div class="box no-border shadow" id="filePrintPreview"
+                <div class="no-border shadow" id="filePrintPreview"
                      style="padding: 2px; width:287.244094488px; height: 287.244094488px; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-line;">
+
                 </div>
             </div>
-            <div class="col-md-6 hidden-print">
+            <div class="col-md-6 hidden-print no-border">
                 {*Size picker*}
                 <div class="col-md-12">
-                    <h4 style="color:#00a65a;">Size <i class="fa fa-expand "></i></h4>
+
                     <div class="col-md-12" style="z-index:9999;">
+                        <h4 style="color:#00a65a;">Size <i class="fa fa-expand "></i></h4>
                         <div class="col-md-3 col-xs-4 shadow" id="postSize"
                              onclick="$('.sizeSelector').removeClass('sizeSelector');$(this).toggleClass('sizeSelector'); changeContainerSize($(this));">
                             <span><b>Post It</b><br><small>76mm x 76mm</small></span>
@@ -72,7 +73,7 @@
                     <div class="col-md-12">
                         <h4 style="color:#00a65a;">Color <i class="fa fa-eyedropper "></i></h4>
                         <div class="col-md-12">
-                            <div id="colorpicker" class="input-group col-md-6 shadow" style="padding:5px;">
+                            <div id="colorpicker" class="input-group col-md-6" style="padding:5px;">
                                 <input type="text" value="#00AABB" class="form-control"/>
                                 <span class="input-group-addon"><i></i></span>
                             </div>
@@ -82,7 +83,7 @@
                     <div class="col-md-12">
                         <h4 style="color:#00a65a;">Font <i class="fa fa-font "></i></h4>
                         <div class="col-md-12">
-                            <div class="col-md-6 shadow" style="padding:5px;">
+                            <div class="col-md-6" style="padding:5px;">
                                 <select class="form-control" onchange="changeFont($(this).val())">
                                     <option value="Arial">Arial</option>
                                     <option value="Calibri">Calibri</option>
@@ -95,17 +96,22 @@
                     </div>
                     {*Strict Checkbox*}
                     <div class="col-md-12">
-                        <h4 style="color:#00a65a;">Ignore CR/LF <i class="fa fa-cross "></i></h4>
+                        <h4 style="color:#00a65a;">Ignore Format <i class="fa fa-cross "></i></h4>
                         <div class="col-md-12">
-                            <div class="col-md-1 shadow" style="padding:5px;">
+                            <div class="col-md-1" style="padding:5px;">
                                 <input id="strictCheckBox" type="checkbox" class="control-form"/>
                             </div>
                         </div>
                     </div>
                     <form action="{$smarty.server.SCRIPT_NAME}" method="post" enctype="multipart/form-data"
                           class="form-horizontal">
+                        <!-- Hidden data -->
+                        <input type="hidden" name="widthDimension" value=""/>
+                        <input type="hidden" name="heightDimension" value=""/>
+                        <input type="hidden" id="cheatsheetData" name="cheatsheetData" value=""/>
+                        <!-- End hidden -->
                         {*Submit*}
-                        <div class="box-footer">
+                        <div class="box-footer no-border">
                             <button type="submit" class="btn btn-success btn-flat pull-right">Save CS</button>
                         </div>
                     </form>
@@ -119,13 +125,13 @@
 
         $(document).ready(function () {
 //        Init the colorpicker input
-            $('#colorpicker').colorpicker();
+           var cpicker =  $('#colorpicker').colorpicker();
 
-            $('#colorpicker').colorpicker().on('changeColor', function () {
+            cpicker.on('changeColor', function () {
                 var element = document.getElementById('filePreview');
-                element.style.color = $(this).colorpicker('getValue', '#ffffff');
-                var element2 = document.getElementById('filePrintPreview');
-                element2.style.color = $(this).colorpicker('getValue', '#ffffff');
+                element.style.color =  $(this).colorpicker('getValue', '#ffffff');
+
+                $('#filePreview').css('style', 'color: green !important');
             });
 
 
