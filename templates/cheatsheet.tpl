@@ -44,7 +44,7 @@
                 <h3 style="color: #12FF12">CheatSheet</h3>
                 <div class="no-border shadow" id="filePrintPreview"
                      style="padding: 2px; width:287.244094488px; height: 287.244094488px; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-line;">
-
+    {*test*}
                 </div>
             </div>
             <div class="col-md-6 hidden-print no-border">
