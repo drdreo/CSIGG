@@ -1,6 +1,6 @@
 @import "vendor/normalize.css";
 @import "vendor/dropzone.css";
-/*Bootstrap*/
+/*!*Bootstrap*!*/
 @import "bootstrap/css/bootstrap.css";
 @import "bootstrap/colorpicker/bootstrap-colorpicker.min.css";
 @import "base/elements.css";
@@ -21,12 +21,24 @@
 @import "utilities/shadow.css";
 @import "utilities/color.css";
 
-@media print{
-
-    *{
-        color: #3366CC !important;
-        background-color: #00a65a !important;
+@media print {
+    div p{
+        color:blue !important;
         -webkit-print-color-adjust: exact;
+    }
+    div:only-child{
+
+        -webkit-print-color-adjust: exact;
+        color:red !important;
+    }
+    div h3{
+        /*color: #a828ad !important;*/
+        -webkit-print-color-adjust: exact;
+    }
+
+    div #filePrintPreview{
+        /*color: red !important;*/
+        -webkit-print-color-adjust: exact !important;
     }
 }
 
