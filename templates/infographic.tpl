@@ -86,20 +86,20 @@
                 {*Charts*}
                 <h4 class="col-md-12" style="color: #00a65a;">ChartType</h4>
                 <div>
-                    <div class="col-md-3">
-                        <i class="fa fa-line-chart fa-5x chart"
+                    <div class="col-md-3" >
+                        <i class="fa fa-line-chart fa-5x chart" id="line"
                            onclick="$('.chart').removeClass('chart-selected');$(this).toggleClass('chart-selected');"></i>
                     </div>
                     <div class="col-md-3">
-                        <i class="fa fa-pie-chart fa-5x chart"
+                        <i class="fa fa-pie-chart fa-5x chart" id="pie"
                            onclick="$('.chart').removeClass('chart-selected');$(this).toggleClass('chart-selected');"></i>
                     </div>
                     <div class="col-md-3">
-                        <i class="fa fa-area-chart fa-5x chart"
+                        <i class="fa fa-area-chart fa-5x chart" id="filledLine"
                            onclick="$('.chart').removeClass('chart-selected');$(this).toggleClass('chart-selected');"></i>
                     </div>
                     <div class="col-md-3">
-                        <i class="fa fa-bar-chart fa-5x chart"
+                        <i class="fa fa-bar-chart fa-5x chart" id="bar"
                            onclick="$('.chart').removeClass('chart-selected');$(this).toggleClass('chart-selected');"></i>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                 <div>
                     <div class="col-md-3 col-xs-3 ">
                         <h4>red</h4>
-                        <div class="color-scheme"
+                        <div class="color-scheme" id="red"
                              onclick="$('.color-scheme').removeClass('color-scheme-selected');$(this).toggleClass('color-scheme-selected');">
                             <div class="col-md-3 bg-red1 color-scheme-element"></div>
                             <div class="col-md-3 bg-red2 color-scheme-element"></div>
@@ -120,7 +120,7 @@
 
                     <div class="col-md-3 col-xs-3">
                         <h4>blue</h4>
-                        <div class="color-scheme"
+                        <div class="color-scheme" id="blue"
                              onclick="$('.color-scheme').removeClass('color-scheme-selected');$(this).toggleClass('color-scheme-selected');">
                             <div class="col-md-3 bg-blue1 color-scheme-element"></div>
                             <div class="col-md-3 bg-blue2 color-scheme-element"></div>
@@ -130,7 +130,7 @@
 
                     <div class="col-md-3 col-xs-3">
                         <h4>green</h4>
-                        <div class="color-scheme"
+                        <div class="color-scheme" id="green"
                              onclick="$('.color-scheme').removeClass('color-scheme-selected');$(this).toggleClass('color-scheme-selected');">
                             <div class="col-md-3 bg-green1 color-scheme-element"></div>
                             <div class="col-md-3 bg-green2 color-scheme-element"></div>
@@ -153,6 +153,7 @@
 </div>
 <script>
     $(document).ready(function () {
+        var title = "title";
 //        Init the colorpicker input
         $('#colorpicker').colorpicker();
 //        Init the dropzone
@@ -188,7 +189,10 @@
                                 data: { text1: contents},
                                 context: document.body
                             }).success(function (request) {
-                                console.log(request);
+                                console.log(JSON.parse(request));
+                                var json = JSON.parse(request)
+                                fillDatasets(json);
+                                fillLabels(json);
                             });
 
                         };
@@ -200,34 +204,21 @@
             }
         });
 
-        var ctx = document.getElementById("myChart");
-        var myChart = new Chart(ctx, {
+        var config = {
             type: 'bar',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+                labels: [],
+                datasets: []
+
             },
             options: {
+                legend: {
+                    position: 'left'
+                },
+                title: {
+                    display: true,
+                    text: 'Custom Chart Title'
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -235,8 +226,210 @@
                         }
                     }]
                 }
+
             }
+
+        };
+
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, config);
+
+
+        $("#pie").click(function() {
+            changeType('pie');
         });
+        $("#line").click(function() {
+            changeType('line');
+
+            changeFill(false);
+        });
+        $("#bar").click(function() {
+            changeType('bar');
+
+        });
+
+        $("#filledLine").click(function() {
+            changeType('line');
+
+            changeFill(true);
+        });
+
+        $("#title").change(function(){
+            var text = $("#title").val();
+            changeTitle(text);
+        });
+
+        $('#green').click(function(){
+            var type = config.type;
+            changeColor('green',type);
+        });
+
+        $('#blue').click(function(){
+            var type = config.type;
+            changeColor('blue',type);
+        });
+
+        $('#red').click(function(){
+            var type = config.type;
+            changeColor('red',type);
+        });
+
+        function changeColor(color,type) {
+            var ctx = document.getElementById("myChart").getContext("2d");
+            var cnt = config.data.datasets[0].data.length;
+
+            var colors = [];
+            var g = 0;
+            var r = 0;
+            var b = 0;
+
+            switch (color)
+                    {
+                case 'green': g = 255; break;
+                case 'blue': b = 255; break;
+                case 'red': r = 255; break;
+                case 'customColor': $('#colorpicker').val(); break;
+            }
+
+            if(type == 'line')
+                    {
+                        cnt = 1;
+                    }
+
+            for(var i = 0; i < cnt; i++)
+            {
+                if(g>0) g = g - 30;
+                if(r>0) r = r - 30;
+                if(b>0) b = b - 30;
+                colors.push('rgba('+r+','+g+','+b+',0.4)');
+            }
+
+            for (var i = 0; i < config.data.datasets.length; i++)
+            {
+                config.data.datasets[i].backgroundColor = colors;
+            }
+
+
+
+            myChart.update();
+        }
+
+        function changeFill(fill) {
+
+            var ctx = document.getElementById("myChart").getContext("2d");
+            config.data.datasets[0].fill = fill;
+
+            destroyChart(ctx,config);
+        }
+
+        function changeTitle(title) {
+            var ctx = document.getElementById("myChart").getContext("2d");
+            config.options.title.text = title;
+
+            destroyChart(ctx,config);
+        }
+
+
+        function changeType(newType) {
+            var ctx = document.getElementById("myChart").getContext("2d");
+
+            config.type = newType;
+
+            var color = $('.color-scheme-selected').attr('id');
+            console.log(color);
+            changeColor(color,newType);
+
+            destroyChart(ctx,config);
+        }
+
+        function fillDatasets(data) {
+            var ctx = document.getElementById("myChart").getContext("2d");
+
+            var type = config.type;
+
+            switch(type)
+                    {
+                case 'bar': fillBarChart(data); break;
+                case 'line':fillLineChart(data); break;
+                case 'pie': fillPieChart(data); break;
+            }
+
+            destroyChart(ctx,config);
+        }
+
+        function fillBarChart(data) {
+
+            for (var j = 0; j < data.length-1; j++) {
+
+                var dataChart = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    dataChart.push(data[i][j+1]);
+                }
+
+
+               config.data.datasets.push(fill('hugo',dataChart));
+            }
+        }
+
+        function fillPieChart(data) {
+
+        }
+
+        function fillLineChart(data) {
+
+        }
+
+        function fillLabels(data) {
+
+            var ctx = document.getElementById("myChart").getContext("2d");
+
+            var cnt = data.length;
+            var labels = [];
+
+            for (var i = 0; i < cnt; i++){
+                labels.push(data[i][0]);
+            }
+
+            config.data.labels = labels;
+            destroyChart(ctx,config);
+        }
+
+
+
+        function destroyChart(ctx, config)
+        {
+            // Remove the old chart and all its event handles
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            // Chart.js modifies the object you pass in. Pass a copy of the object so we can use the original object later
+
+            myChart = new Chart(ctx, config);
+        }
+
+        function fill(label,data) {
+
+            var json = {
+                fill: false,
+                label: label,
+                data: data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderWidth: 1
+            };
+
+            return json;
+        }
     });
+
+
 </script>
 {include file="{$smarty.const.BASETEMPLATEPATH}footer.tpl"}
