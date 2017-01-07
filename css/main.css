@@ -21,12 +21,9 @@
 @import "utilities/shadow.css";
 @import "utilities/color.css";
 
-@media print{
-
-    *{
-        color: #3366CC !important;
-        background-color: #00a65a !important;
+@media print {
+    .visible-print {
+        background-color: #1a4567 !important;
         -webkit-print-color-adjust: exact;
     }
 }
-

@@ -237,6 +237,7 @@
                 }
             }
         });
-    });
+    })
+
 </script>
 {include file="{$smarty.const.BASETEMPLATEPATH}footer.tpl"}

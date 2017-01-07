@@ -3,7 +3,7 @@
     <!-- Main Header -->
     <header class="main-header navbar-color hidden-print">
         <!-- Logo -->
-        <span class="logo">
+        <span class="logo" >
             <span class="logo-lg"><b>CSIGG</b></span>
         </span>
         <nav class="navbar">
@@ -27,6 +27,12 @@
                             <span>IG</span>
                         </a>
                     </li>
+                    <li class="">
+                        <a>
+                            <span> <button onclick="$('header').hide(); $('aside').hide();">hide</button></span>
+                        </a>
+                    </li>
+
                     <li class="">
                         <a href="profile.php">
                             <span>Profile</span>
