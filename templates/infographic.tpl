@@ -86,20 +86,20 @@
                 {*Charts*}
                 <h4 class="col-md-12" style="color: #00a65a;">ChartType</h4>
                 <div>
-                    <div class="col-md-3" >
-                        <i class="fa fa-line-chart fa-5x chart" id="line"
+                    <div class="col-md-3">
+                        <i class="fa fa-bar-chart fa-5x chart" id="bar"
                            onclick="$('.chart').removeClass('chart-selected');$(this).toggleClass('chart-selected');"></i>
                     </div>
                     <div class="col-md-3">
                         <i class="fa fa-pie-chart fa-5x chart" id="pie"
                            onclick="$('.chart').removeClass('chart-selected');$(this).toggleClass('chart-selected');"></i>
                     </div>
-                    <div class="col-md-3">
-                        <i class="fa fa-area-chart fa-5x chart" id="filledLine"
+                    <div class="col-md-3" >
+                        <i class="fa fa-line-chart fa-5x chart" id="line"
                            onclick="$('.chart').removeClass('chart-selected');$(this).toggleClass('chart-selected');"></i>
                     </div>
                     <div class="col-md-3">
-                        <i class="fa fa-bar-chart fa-5x chart" id="bar"
+                        <i class="fa fa-area-chart fa-5x chart" id="filledLine"
                            onclick="$('.chart').removeClass('chart-selected');$(this).toggleClass('chart-selected');"></i>
                     </div>
                 </div>
@@ -152,10 +152,26 @@
     </div>
 </div>
 <script>
+    var globalData = [];
     $(document).ready(function () {
         var title = "title";
 //        Init the colorpicker input
-        $('#colorpicker').colorpicker();
+        var cpicker = $('#colorpicker').colorpicker();
+
+        cpicker.on('changeColor', function () {
+//            var element = document.getElementById('filePreview');
+//            element.style.color =  $(this).colorpicker('getValue', '#ffffff');
+            var rgb = hexToRgb($(this).colorpicker('getValue', '#ffffff'));
+
+            var type = config.type;
+
+            changeColor(rgb, type);
+
+//            $('#filePreview').css('style', 'color: green !important');
+        });
+
+
+
 //        Init the dropzone
         Dropzone.autoDiscover = false;
         Dropzone.keepLocal = true;
@@ -217,7 +233,9 @@
                 },
                 title: {
                     display: true,
-                    text: 'Custom Chart Title'
+                    text: 'Custom Chart Title',
+                    fontSize: 18,
+                    fontFamily: 'Helvetica'
                 },
                 scales: {
                     yAxes: [{
@@ -250,8 +268,24 @@
 
         $("#filledLine").click(function() {
             changeType('line');
-
             changeFill(true);
+        });
+
+
+        $("#bottom").click(function() {
+            changePositionLabel('bottom');
+        });
+
+        $("#top").click(function() {
+            changePositionLabel('top');
+        });
+
+        $("#left").click(function() {
+            changePositionLabel('left');
+        });
+
+        $("#right").click(function() {
+            changePositionLabel('right');
         });
 
         $("#title").change(function(){
@@ -274,26 +308,30 @@
             changeColor('red',type);
         });
 
+
         function changeColor(color,type) {
             var ctx = document.getElementById("myChart").getContext("2d");
             var cnt = config.data.datasets[0].data.length;
 
-            var colors = [];
+            var backgroundColor = [];
+            var borderColor = [];
             var g = 0;
             var r = 0;
             var b = 0;
+
+            out(color);
 
             switch (color)
                     {
                 case 'green': g = 255; break;
                 case 'blue': b = 255; break;
                 case 'red': r = 255; break;
-                case 'customColor': $('#colorpicker').val(); break;
+                //default: r = color[0]; g = color[1]; b = color[2]; break;
             }
 
             if(type == 'line')
                     {
-                        cnt = 1;
+                        cnt = config.data.datasets.length;
                     }
 
             for(var i = 0; i < cnt; i++)
@@ -301,18 +339,26 @@
                 if(g>0) g = g - 30;
                 if(r>0) r = r - 30;
                 if(b>0) b = b - 30;
-                colors.push('rgba('+r+','+g+','+b+',0.4)');
+                backgroundColor.push('rgba('+r+','+g+','+b+',0.5)');
+                borderColor.push('rgba('+r+','+g+','+b+',1.0)')
             }
 
             for (var i = 0; i < config.data.datasets.length; i++)
             {
-                config.data.datasets[i].backgroundColor = colors;
+                config.data.datasets[i].backgroundColor = backgroundColor;
+                config.data.datasets[i].borderColor = backgroundColor;
+                if(type == 'line' || type == 'pie')
+                {
+                    config.data.datasets[i].borderWidth = 3;
+                } else {
+                    config.data.datasets[i].borderWidth = 0;
+                }
+
             }
-
-
-
             myChart.update();
         }
+
+
 
         function changeFill(fill) {
 
@@ -322,9 +368,16 @@
             destroyChart(ctx,config);
         }
 
+        function changePositionLabel(position){
+            var ctx = document.getElementById("myChart").getContext("2d");
+            config.options.legend.position = position;
+            destroyChart(ctx,config);
+        }
+
         function changeTitle(title) {
             var ctx = document.getElementById("myChart").getContext("2d");
             config.options.title.text = title;
+            config.options.title.fontSize = 18;
 
             destroyChart(ctx,config);
         }
@@ -335,6 +388,16 @@
 
             config.type = newType;
 
+            switch (newType)
+                    {
+                case 'pie': fillBarPieDatasets();
+                    break;
+                case 'bar': fillBarPieDatasets();
+                    break;
+                case 'line': fillLineDatasets();
+                    break;
+            }
+
             var color = $('.color-scheme-selected').attr('id');
             console.log(color);
             changeColor(color,newType);
@@ -342,43 +405,62 @@
             destroyChart(ctx,config);
         }
 
-        function fillDatasets(data) {
-            var ctx = document.getElementById("myChart").getContext("2d");
 
-            var type = config.type;
+        function fillDatasets(data){
 
-            switch(type)
-                    {
-                case 'bar': fillBarChart(data); break;
-                case 'line':fillLineChart(data); break;
-                case 'pie': fillPieChart(data); break;
-            }
-
-            destroyChart(ctx,config);
-        }
-
-        function fillBarChart(data) {
-
-            for (var j = 0; j < data.length-1; j++) {
+            for (var i = 0; i < data.length; i++) {
 
                 var dataChart = [];
 
-                for (var i = 0; i < data.length; i++) {
-                    dataChart.push(data[i][j+1]);
+                for (var j = 0; j < data.length; j++) {
+                    dataChart.push(data[i][j]);
                 }
-
-
-               config.data.datasets.push(fill('hugo',dataChart));
+                globalData.push(dataChart);
             }
         }
 
-        function fillPieChart(data) {
 
+        function fillBarPieDatasets() {
+
+            var ctx = document.getElementById("myChart").getContext("2d");
+            var data = globalData;
+            var datasets = [];
+
+            for (var i = 1; i < data.length; i++) {
+
+                var dataChart = [];
+
+                for (var j = 0; j < data.length; j++) {
+                    dataChart.push(data[j][i]);
+                }
+                datasets.push(fill('Dataset'+i,dataChart));
+            }
+            config.data.datasets = datasets;
+            destroyChart(ctx,config);
         }
 
-        function fillLineChart(data) {
 
+        function fillLineDatasets() {
+            var ctx = document.getElementById("myChart").getContext("2d");
+            var data = globalData;
+            var datasets = [];
+
+            for (var i = 1; i < data.length; i++) {
+
+                var dataChart = [];
+
+                for (var j = 0; j < data.length; j++) {
+                    dataChart.push(data[i][j]);
+                }
+                datasets.push(dataChart);
+
+            }
+            console.log(datasets);
+//            config.data.datasets = datasets;
+            destroyChart(ctx,config);
         }
+
+
 
         function fillLabels(data) {
 
