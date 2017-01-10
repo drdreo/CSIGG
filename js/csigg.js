@@ -9,6 +9,15 @@ function changeFont(font) {
 
 }
 
+function changeFontColor(colorPicker)
+{
+    var element = document.getElementById('filePreview');
+    var color =  colorPicker.colorpicker('getValue', '#ffffff');
+
+    element.style.setProperty('color', color, 'important');
+
+
+}
 function changeContainerSize(div) {
     var id = div.attr('id');
     var width, height;
@@ -106,7 +115,7 @@ function copyFormat(element1, element2) {
 
     element2.style.fontSize = element1.style.fontSize;
     element2.style.fontFamily = element1.style.fontFamily;
-    element2.style.color = element1.style.color;
+    element2.style.setProperty('color',element1.style.color,'important');
     element2.style.width = element1.style.width;
     element2.style.height = element1.style.height;
     element2.innerHTML = element1.innerHTML;

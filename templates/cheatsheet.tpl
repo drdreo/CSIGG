@@ -41,10 +41,10 @@
             </div>
             {*Printed CheatSheet*}
             <div class="visible-print" style="position: static;">
-                <h3 style="color: #12FF12">CheatSheet</h3>
+                <h3>CheatSheet</h3>
                 <div class="no-border shadow" id="filePrintPreview"
                      style="padding: 2px; width:287.244094488px; height: 287.244094488px; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-line;">
-    {*test*}
+                    <p>TEST text</p>
                 </div>
             </div>
             <div class="col-md-6 hidden-print no-border">
@@ -128,10 +128,7 @@
            var cpicker =  $('#colorpicker').colorpicker();
 
             cpicker.on('changeColor', function () {
-                var element = document.getElementById('filePreview');
-                element.style.color =  $(this).colorpicker('getValue', '#ffffff');
-
-                $('#filePreview').css('style', 'color: green !important');
+                changeFontColor($(this));
             });
 
 
