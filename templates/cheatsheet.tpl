@@ -1,7 +1,7 @@
 {include file="{$smarty.const.BASETEMPLATEPATH}header.tpl"}
 {include file="{$smarty.const.BASETEMPLATEPATH}navbar.tpl"}
 
-<div class="content-wrapper" style="min-height: 600px; background-color: white;">
+<div class="content-wrapper" style="min-height: 820px; background-color: white;">
     <div class="col-md-12 box no-border">
         <div class="box-header hidden-print">
             <h3>CheatSheet Generator</h3>

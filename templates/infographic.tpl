@@ -10,7 +10,7 @@
         <div class="box-body">
             <div class="col-md-6 border-right">
                 {*DropZone*}
-                <div class="col-md-12">
+                <div class="col-md-12 hidden-print">
                     <h3>DropZone</h3>
                     <form action="{$smarty.server.SCRIPT_NAME}" class="dropzone" id="my-dropzone"
                           enctype="multipart/form-data">
@@ -22,8 +22,8 @@
                 </div>
                 {*Text Upload Preview*}
                 <div class="col-md-12">
-                    <h3 class="pull-left">RenderView</h3>
-                    <button class="btn btn-flat btn-warning pull-right btn-sm" style="margin-top: 15px;">Render</button>
+                    <h3 class="pull-left hidden-print">RenderView</h3>
+                    <button class="btn btn-flat btn-warning pull-right btn-sm hidden-print" id="render" style="margin-top: 15px;" onclick="generateInfographic()">Render</button>
 
                     <div class="box no-border shadow" id="filePreview"
                          style="min-height:100px; overflow: scroll;">
@@ -33,22 +33,19 @@
 
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 hidden-print">
 
                 {*Title*}
                 <div class="col-md-12" style="padding-bottom: 5px; color: #00a65a;">
                     <h4>Title of your Infographic</h4>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="title" placeholder="Title">
+                        <input type="text" class="form-control" id="title" placeholder="Custom Chart Title">
                     </div>
                 </div>
 
                 {*Legend*}
                 <div class="col-md-12" style="padding-bottom: 5px; color: #00a65a;">
                     <h4>Legend</h4>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="legend" placeholder="Legend">
-                    </div>
                 </div>
 
                 {*Buttons for Legend*}
@@ -110,7 +107,7 @@
                 <div>
                     <div class="col-md-3 col-xs-3 ">
                         <h4>red</h4>
-                        <div class="color-scheme" id="red"
+                        <div class="color-scheme color-scheme-selected" id="red"
                              onclick="$('.color-scheme').removeClass('color-scheme-selected');$(this).toggleClass('color-scheme-selected');">
                             <div class="col-md-3 bg-red1 color-scheme-element"></div>
                             <div class="col-md-3 bg-red2 color-scheme-element"></div>
@@ -159,15 +156,10 @@
         var cpicker = $('#colorpicker').colorpicker();
 
         cpicker.on('changeColor', function () {
-//            var element = document.getElementById('filePreview');
-//            element.style.color =  $(this).colorpicker('getValue', '#ffffff');
             var rgb = hexToRgb($(this).colorpicker('getValue', '#ffffff'));
-
             var type = config.type;
 
             changeColor(rgb, type);
-
-//            $('#filePreview').css('style', 'color: green !important');
         });
 
 
@@ -205,8 +197,9 @@
                                 data: { text1: contents},
                                 context: document.body
                             }).success(function (request) {
+                                globalData = [];
                                 console.log(JSON.parse(request));
-                                var json = JSON.parse(request)
+                                var json = JSON.parse(request);
                                 fillDatasets(json);
                                 fillLabels(json);
                             });
@@ -258,19 +251,17 @@
         });
         $("#line").click(function() {
             changeType('line');
-
-            changeFill(false);
+            changeFillofLine(false);
         });
+
         $("#bar").click(function() {
             changeType('bar');
-
         });
 
         $("#filledLine").click(function() {
             changeType('line');
-            changeFill(true);
+            changeFillofLine(true);
         });
-
 
         $("#bottom").click(function() {
             changePositionLabel('bottom');
@@ -313,33 +304,42 @@
             var ctx = document.getElementById("myChart").getContext("2d");
             var cnt = config.data.datasets[0].data.length;
 
+
+            if(color instanceof Array){
+                var colorpicker = color;
+                color = 'custom';
+            }
+
             var backgroundColor = [];
             var borderColor = [];
             var g = 0;
             var r = 0;
             var b = 0;
 
-            out(color);
-
             switch (color)
-                    {
+            {
                 case 'green': g = 255; break;
                 case 'blue': b = 255; break;
                 case 'red': r = 255; break;
-                //default: r = color[0]; g = color[1]; b = color[2]; break;
+                case 'custom':r = colorpicker[0]; g = colorpicker[1]; b = colorpicker[2]; break;
+                default: r= 80; g=80; b =80; break;
             }
+
 
             if(type == 'line')
                     {
                         cnt = config.data.datasets.length;
                     }
 
+            var vl = 230/cnt;
+
             for(var i = 0; i < cnt; i++)
             {
-                if(g>0) g = g - 30;
-                if(r>0) r = r - 30;
-                if(b>0) b = b - 30;
-                backgroundColor.push('rgba('+r+','+g+','+b+',0.5)');
+
+                if(g>0) g = g - vl;
+                if(r>0) r = r - vl;
+                if(b>0) b = b - vl;
+                backgroundColor.push('rgba('+r+','+g+','+b+',0.7)');
                 borderColor.push('rgba('+r+','+g+','+b+',1.0)')
             }
 
@@ -358,13 +358,33 @@
             myChart.update();
         }
 
+/*
+        function getColor(color, cnt)
+        {
 
+            for (var i = 0, i < cnt;i++)
+            {
 
-        function changeFill(fill) {
+            }
+
+            var custom[];
+
+            var red = [[255,105,97],[255,28,0],[255,8,0],[227,66,52],[215,59,62],[206, 22, 32],[204, 0, 0],[178, 34, 34],[179, 27, 27],[164, 0, 0],[128, 0, 0],[112, 28, 28]];
+            var blue = [[146, 161, 207],[42, 82, 190],[0, 0, 225],[0, 47, 167],[0, 51, 153],[0, 0, 156],[18, 10, 134],[0, 0, 139],[0, 0, 128],[25, 25, 112],[8, 37, 103]];
+            var green = [[0, 204, 153],[80, 200, 120],[62, 180, 137],[3, 192, 60],[0, 168, 107],[0, 117, 94],[23, 114, 69],[0, 107, 60],[1, 68, 33],[0, 66, 37],[1, 50, 32]];
+        }
+*/
+
+        function changeFillofLine(fill) {
 
             var ctx = document.getElementById("myChart").getContext("2d");
-            config.data.datasets[0].fill = fill;
+            var data = globalData;
 
+            for(var i = 0; i < data.length; i++)
+            {
+
+                config.data.datasets[i].fill = fill;
+            }
             destroyChart(ctx,config);
         }
 
@@ -386,11 +406,12 @@
         function changeType(newType) {
             var ctx = document.getElementById("myChart").getContext("2d");
 
+
             config.type = newType;
 
             switch (newType)
                     {
-                case 'pie': fillBarPieDatasets();
+                case 'pie': fillLineDatasets();
                     break;
                 case 'bar': fillBarPieDatasets();
                     break;
@@ -399,7 +420,7 @@
             }
 
             var color = $('.color-scheme-selected').attr('id');
-            console.log(color);
+
             changeColor(color,newType);
 
             destroyChart(ctx,config);
@@ -412,11 +433,12 @@
 
                 var dataChart = [];
 
-                for (var j = 0; j < data.length; j++) {
+                for (var j = 0; j < data[i].length; j++) {
                     dataChart.push(data[i][j]);
                 }
                 globalData.push(dataChart);
             }
+
         }
 
 
@@ -426,7 +448,7 @@
             var data = globalData;
             var datasets = [];
 
-            for (var i = 1; i < data.length; i++) {
+            for (var i = 1; i < data[0].length; i++) {
 
                 var dataChart = [];
 
@@ -435,7 +457,11 @@
                 }
                 datasets.push(fill('Dataset'+i,dataChart));
             }
+
             config.data.datasets = datasets;
+
+            fillLabels(data);
+
             destroyChart(ctx,config);
         }
 
@@ -445,18 +471,22 @@
             var data = globalData;
             var datasets = [];
 
-            for (var i = 1; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
 
                 var dataChart = [];
 
-                for (var j = 0; j < data.length; j++) {
-                    dataChart.push(data[i][j]);
+                for (var j = 0; j < data[0].length; j++) {
+                    dataChart.push(data[i][j+1]);
                 }
-                datasets.push(dataChart);
+                datasets.push(fill('Dataset'+i,dataChart));
 
             }
-            console.log(datasets);
-//            config.data.datasets = datasets;
+
+            config.data.datasets = datasets;
+
+            console.log(data);
+            fillLabels(data);
+
             destroyChart(ctx,config);
         }
 
@@ -464,32 +494,50 @@
 
         function fillLabels(data) {
 
+            console.log(data);
             var ctx = document.getElementById("myChart").getContext("2d");
 
-            var cnt = data.length;
-            var labels = [];
+            var type = config.type;
 
-            for (var i = 0; i < cnt; i++){
-                labels.push(data[i][0]);
+            if(type == 'bar' || type == 'pie') {
+
+                var cnt = data.length;
+                var labels = [];
+
+                for (var i = 0; i < cnt; i++) {
+                    labels.push(data[i][0]);
+                }
+
+                config.data.labels = labels;
+                destroyChart(ctx, config);
             }
+            else{
 
-            config.data.labels = labels;
-            destroyChart(ctx,config);
+                var cnt2 = data[0].length-1;
+
+                var labels2 = [];
+
+                for (var j = 0; j < cnt2; j++) {
+                    labels2.push(j);
+                }
+
+                config.data.labels = labels2;
+                destroyChart(ctx, config);
+
+            }
         }
 
 
 
         function destroyChart(ctx, config)
         {
-            // Remove the old chart and all its event handles
             if (myChart) {
                 myChart.destroy();
             }
 
-            // Chart.js modifies the object you pass in. Pass a copy of the object so we can use the original object later
-
             myChart = new Chart(ctx, config);
         }
+
 
         function fill(label,data) {
 
@@ -497,14 +545,8 @@
                 fill: false,
                 label: label,
                 data: data,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
+                backgroundColor: [],
+                borderColor:[],
                 borderWidth: 1
             };
 

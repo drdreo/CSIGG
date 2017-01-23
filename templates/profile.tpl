@@ -1,6 +1,6 @@
 {include file="{$smarty.const.BASETEMPLATEPATH}header.tpl"}
 {include file="{$smarty.const.BASETEMPLATEPATH}navbar.tpl"}
-<div class="content-wrapper" style="min-height: 700px;">
+<div class="content-wrapper" style="min-height: 820px;">
     <div class="content-header col-l-12">
         <h1>Profile</h1>
     </div>

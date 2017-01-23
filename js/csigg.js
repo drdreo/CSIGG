@@ -151,8 +151,13 @@ function hexToRgb(hex) {
     var rgb = [];
 
     rgb[0] = parseInt(result[1], 16);
-    rgb [1] = parseInt(result[2], 16);
+    rgb[1] = parseInt(result[2], 16);
     rgb[2] = parseInt(result[3], 16);
     return rgb;
+    //return "rgb(" + parseInt(result[1], 16) + ","+parseInt(result[2], 16) + "," + parseInt(result[3], 16) + ")";
 }
 
+function generateInfographic() {
+
+    window.print();
+}
