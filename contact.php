@@ -7,7 +7,7 @@ require_once DBACCESS;
 
 
 /**
- * Class Shop implementiert die Startseite (index.php) des OnlineShop
+ * Class Contact implementiert die Startseite (contact.php) von CSIGG
  *
  * Die Seite index.php setzt auf der ojectorientieren Klasse TNormform und den Smarty-Templates von IMAR aus HM2 auf.
  * Weiters benötigt es die Klasse DBAccess für Datenbankzugriffe, die die Klasse FileAccess von IMAR ersetzt.
@@ -25,29 +25,23 @@ require_once DBACCESS;
  * @version 2016
  */
 
-final class Settings extends TNormForm {
+final class Contact extends TNormForm {
 
     /**
      * @var string $dbAccess Datenbankhandler für den Datenbankzugriff
      */
     private $dbAccess;
 
-    private $firstname;
-    private $lastname;
-    private $username;
-    private $email;
-    private $password;
-    private $uid;
+    const SUBJECT = "subject";
+    const MESSAGE = "message";
+
     /**
-     * Shop Constructor.
+     * Contact Constructor.
      *
      * Ruft den Constructor der Klasse TNormform auf.
-     * Erzeugt den Datenbankhandler mit der Datenbankverbindung
-     * Die übergebenen Konstanten finden sich in includes/defines.inc.php
      */
     public function __construct() {
         parent::__construct();
-        $this->dbAccess = new DBAccess(DSN, DB_USER, DB_PWD, DB_NAMES, DB_COLLATION);
 
     }
 
@@ -66,12 +60,10 @@ final class Settings extends TNormForm {
      */
     protected function prepareFormFields() {
 
-        $this->fillPage();
-        $this->smarty->assign('firstname', $this->firstname);
-        $this->smarty->assign('lastname', $this->lastname);
-        $this->smarty->assign('username', $this->username);
-        $this->smarty->assign('email', $this->email);
-        $this->smarty->assign('password', $this->password);
+        $this->smarty->assign('subjectKey', self::SUBJECT);
+        $this->smarty->assign('messageKey', self::MESSAGE);
+        $this->smarty->assign("messageValue", $this->autofillFormField(self::MESSAGE));
+        $this->smarty->assign("subjectValue", $this->autofillFormField(self::SUBJECT));
     }
 
     /**
@@ -81,18 +73,13 @@ final class Settings extends TNormForm {
      */
     protected function display() {
 
-        $this->smarty->display('settings.tpl');
+        $this->smarty->display('contact.tpl');
     }
 
     /**
      * Validiert den Benutzerinput nach dem Abschicken einer Bestellung durch einen der Buttons AddToCart.
      *
-     * Auch wenn die pids im Template durch das PHP-Script index.php eingetragen werden, muss der Input als Benutzerinput gewertet werden,
-     * weil man nicht weiß, ob der Nutzer zum Senden der Bestellung den Request mit entsprechenden Tools noch manipuliert.
-     * Für jede pid ist ein eigener Button implementiert, daher wird jede pid im Array $_POST['pid'] in einem eigenen Eintrag gespeichert.
-     * Mittels Shop::isValidPid() wird jede pid im Array $_POST['pid'] auf positives Integer oder 0 geprüft und damit XSS verhindert.
-     * Zusätzlich wird jede pid geprüft, od diese in der Tabelle onlineshop.product vorkommt, um Forced Browsing mit sinnlosen pids zu verhindern.
-     *
+
      * Fehlermeldungen werden im Array $errMsg[] gesammelt.
      *
      * Abstracte Methode in der Klasse TNormform und muss daher hier implementiert werden
@@ -101,6 +88,14 @@ final class Settings extends TNormForm {
      */
     protected function isValid() {
 
+        //Subject set
+        if ($this->isEmptyPostField(self::SUBJECT)) {
+            $this->errMsg[self::SUBJECT] = "Please enter a subject.";
+        }
+        //Message set
+        if ($this->isEmptyPostField(self::MESSAGE)) {
+            $this->errMsg[self::MESSAGE] = "No message entered.";
+        }
 
         return (count($this->errMsg) === 0);
     }
@@ -122,64 +117,31 @@ final class Settings extends TNormForm {
      *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
      */
     protected function process() {
+
+
+        $to = "support@csigg.com";
+        $subject = $_POST[self::SUBJECT];
+        $message = $_POST[self::MESSAGE];
+        $headers = "From: support@csigg.com" . "\r\n";
+
+        mail($to,$subject,$message,$headers);
+
+        $this->statusMsg = "Message '" . $_POST[self::SUBJECT] ."' sent!";
         return true;
-        $this->changeUser();
-        $this->statusMsg = "User $this->uid changed successfully";
     }
 
-    /**
-     * Befüllt das Array um alle Produkte aufzulisten, die auf der aktuellen Seite angezeigt werden.
-     *
-     * Es werden nur aktive Produkte berücksichtigt, bei denen die Spalte onlineshop.product.active='1' ist.
-     *
-     * Es werden nur die Produkte gelesen, die dem Suchkriterium entsprechen. Das Suchkriterium aus dem Suchfeld (GET-Formular) kann leer sein.
-     * Dann gibt es keine Einschränkung.
-     * Suchfelder über die LIKE-Klausel sind die Spalten onlineshop.product_name, .short_description, long_description.
-     * Der Suchbegriff wird in @see Shop::setSearch() ermittelt.
-     *
-     * Der Startwert der LIMIT-Klausel wird in @see Shop::setPaginationParameters() ermittelt.
-     *
-     * Weiters werden die Datensätze in der mittels $_GET[self::SORT] geschickten Sortierreihenfolge ausgegeben (ORDER BY).
-     * Die Sortierreihenfolge wird durch @see Shop::setOrderBy() ermittelt.
-     *
-     * Es werden so viele Sätze gelesen, wie in der Konstante DISPLAY festgelegt. @see includes/defines.inc.php
-     *
-     * @throws DatabaseException Diese wird von allen $this->dbAccess Methoden geworfen und hier nicht behandelt.
-     *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
-     */
-    private function fillPage() {
 
-        $sql_query = <<< SQL
-        SELECT *
-        FROM
-        USER
-        WHERE iduser = :uid
-SQL;
-//        TODO
-//        Connect to database and fill user data
-        $this->firstname ="";
-        $this->lastname="";
-        $this->username="";
-        $this->email="";
-        $this->password="";
-    }
-
-    private function changeUser() {
-
-        return true;
-
-    }
 }
 /**
- * Instantiieren der Klasse Shop und Aufruf der Methode TNormform::normForm()
+ * Instantiieren der Klasse Contact und Aufruf der Methode TNormform::normForm()
  *
  * Datenbank-Exceptions werden erst hier abgefangen und eine formatierte DEBUG-Seite mit den Fehlermeldungen mit echo ausgegeben @see DBAcess::dbugSQL()
  * Bei PHP-Exception wird vorerst nur auf eine allgemeine Errorpage weitergeleitet
  */
 try {
     Utilities::redirectTo();
-    $settings = new Settings();
-    $settings->normForm();
+    $contact = new Contact();
+    $contact->normForm();
 } catch (DatabaseException $e) {
     echo $e->getMessage();
 }

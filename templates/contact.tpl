@@ -17,7 +17,6 @@
                 <div class="box-body">
                     <div class="table-responsive">
                         <table class="table">
-
                             <th colspan="2" class="info">Things you need to know about us.</th>
 
                             <tr>
@@ -51,13 +50,12 @@
                             </tr>
                             <tr>
                                 <td>Fax</td>
-                                <td>who the fuck still use this?</td>
+                                <td>who the fax still owns one?</td>
                             </tr>
-
-
                         </table>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -67,49 +65,47 @@
                 <div class="box-header with-border">
                     <h2 class="box-title">Follow us:</h2>
                     <div class="box-body">
-                        <a class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
-                        <a class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
-                        <a class="btn btn-social-icon btn-instagram"><i class="fa fa-instagram"></i></a>
+                        <a href="https://www.facebook.at" class="btn btn-social-icon btn-facebook"><i
+                                    class="fa fa-facebook"></i></a>
+                        <a href="https://www.twitter.at" class="btn btn-social-icon btn-twitter"><i
+                                    class="fa fa-twitter"></i></a>
+                        <a href="https://www.instagram.com" class="btn btn-social-icon btn-instagram"><i
+                                    class="fa fa-instagram"></i></a>
 
                     </div>
 
                 </div>
                 <div class="box-header with-border">
-                    <h2 class="box-title">Always up to date?</h2>
+                    <h2 class="box-title">Questions?
+                        <small>Feel free to contact us:</small>
+                    </h2>
 
-                    <form>
-                        <div class="box-body form-group">
+                    <!-- form start -->
+                    <form action="{$smarty.server.SCRIPT_NAME}" method="post" enctype="multipart/form-data"
+                          class="form-horizontal">
+                        {include file="{$smarty.const.BASETEMPLATEPATH}error.tpl"}
 
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-
-                        </div>
-                        <div class="box-footer">
-                            <button type="submit" class=" pull-right btn btn-sm btn-flat">Order Newsletter</button>
+                        <div class="box-body">
+                            <div>
+                                <div class="form-group">
+                                    <label for=betreff">Betreff:</label>
+                                    <input class="form-control" id="{$subjectKey}" name="{$subjectKey}"
+                                           value="{if isset($subjectValue)}{$subjectValue}{/if}"/>
+                                    <label for="comment">Message:</label>
+                                    <textarea class="form-control" rows="4" id="{$messageKey}"
+                                              name="{$messageKey}"> {if isset($messageValue)}{$messageValue}{/if}</textarea>
+                                    <button type="submit" class="btn btn-sm btn-primary btn-flat pull-right"
+                                            style="margin-top: 10px;"
+                                    ">Send
+                                    </button>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
 
             </div>
-
-            <div class="box no-border shadow">
-                <div class="box-header with-border">
-                    <h2 class="box-title">Questions? <small>Feel free to contact us: </small></h2>
-                    <div class="box-body">
-
-                        <div>
-                            <div class="form-group">
-                                <label for=betreff">Betreff:</label>
-                                <input class="form-control" id ="betreff">
-                                <label for="comment">Message:</label>
-                                <textarea class="form-control" rows="4" id="comment"></textarea>
-                                <a href="mailto:andreas@fh-hagenberg.at?subject=look at this website&body=Hi,"><button type="button" class="btn btn-sm btn-flat pull-right" style="margin-top: 10px;">Send</button></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-
 {include file="{$smarty.const.BASETEMPLATEPATH}footer.tpl"}

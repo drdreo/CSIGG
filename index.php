@@ -23,7 +23,9 @@ final class Index extends TNormForm {
      */
     private $dbAccess;
 
-    private $totalUser =0;
+    private $totalUser = 0;
+    private $totalCheatSheets = 0;
+    private $totalInfographics = 0;
     /**
      * Index Constructor.
      *
@@ -47,6 +49,8 @@ final class Index extends TNormForm {
         $this->loadContent();
 
         $this->smarty->assign('totalUser', $this->totalUser);
+        $this->smarty->assign('totalCheatSheets', $this->totalCheatSheets);
+        $this->smarty->assign('totalInfographics', $this->totalInfographics);
     }
 
     /**
@@ -97,9 +101,32 @@ final class Index extends TNormForm {
 SQL;
         $this->dbAccess->prepareQuery($sql_query);
         $this->dbAccess->executeStmt();
-        $row = $this->dbAccess->fetchSingle();
+        $user = $this->dbAccess->fetchSingle();
 
-        $this->totalUser = $row["totalUser"];
+        $sql_query = <<< SQL
+        SELECT count(*) AS totalCS
+        FROM
+        cheatsheet
+        WHERE 1
+SQL;
+        $this->dbAccess->prepareQuery($sql_query);
+        $this->dbAccess->executeStmt();
+        $cs = $this->dbAccess->fetchSingle();
+
+        $sql_query = <<< SQL
+        SELECT count(*) AS totalIG
+        FROM
+        infographic
+        WHERE 1
+SQL;
+        $this->dbAccess->prepareQuery($sql_query);
+        $this->dbAccess->executeStmt();
+        $ig = $this->dbAccess->fetchSingle();
+
+
+        $this->totalUser = $user["totalUser"];
+        $this->totalCheatSheets = $cs["totalCS"];
+        $this->totalInfographics = $ig["totalIG"];
 
     }
 

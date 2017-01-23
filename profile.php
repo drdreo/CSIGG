@@ -68,6 +68,10 @@ final class Profile extends TNormForm
     {
 
         $this->fillPostArray($this->uid);
+        $cheatSheetArray = $this->loadUserCheatSheets($this->uid);
+
+        $this->smarty->assign('cheatSheets', $cheatSheetArray);
+
 
         $this->smarty->assign('firstnameKey', self::FIRSTNAME);
         $this->smarty->assign('firstnameValue', $this->autofillFormField(self::FIRSTNAME));
@@ -204,7 +208,6 @@ SQL;
             $_POST[self::NEWSLETTER] = 1;
         }
 
-        //if(isset($_POST[self::CHANGEPWD]) && $_POST[self::CHANGEPWD] == 1) $this->changePwd = true;
     }
 
     private function isUniqueEmail($email)
@@ -272,6 +275,19 @@ SQL;
         $this->dbAccess->executeStmt($vars);
 
         return true;
+    }
+
+    private function loadUserCheatSheets($uid)
+    {
+        $sql_query = <<< SQL
+        SELECT path,created
+        FROM cheatsheet
+        WHERE user_iduser = :uid
+SQL;
+
+        $this->dbAccess->prepareQuery($sql_query);
+        $this->dbAccess->executeStmt(array(":uid" => $uid));
+        return $this->dbAccess->fetchResultset();
     }
 }
 

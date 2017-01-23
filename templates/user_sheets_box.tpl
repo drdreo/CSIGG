@@ -5,47 +5,25 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                    <div class="caption">
-                        <h5>Thumbnail 1</h5>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                    <div class="caption">
-                        <h5>Thumbnail 2</h5>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                    <div class="caption">
-                        <h5>Thumbnail 3</h5>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                    <div class="caption">
-                        <h5>Thumbnail 4</h5>
-                    </div>
-                </a>
-
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                    <div class="caption">
-                        <h5>Thumbnail label</h5>
-                    </div>
-                </a>
-            </div>
+            {foreach key=cid item=con from=$cheatSheets}
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a class="thumbnail" href="#">
+                        <img class="img-responsive" src="{$con.path}" alt="">
+                        <div class="caption">
+                            <h5>{$con.created}</h5>
+                        </div>
+                    </a>
+                </div>
+                {foreachelse}
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a class="thumbnail" href="#">
+                        <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                        <div class="caption">
+                            <h5>No CheatSheets yet!</h5>
+                        </div>
+                    </a>
+                </div>
+            {/foreach}
         </div>
         <!-- /.box-body -->
     </div>

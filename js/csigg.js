@@ -2,6 +2,7 @@
  * Created by Andreas on 03.12.16.
  */
 
+//Allrounder
 function changeFont(font) {
     console.log(font);
     var element = document.getElementById('filePreview');
@@ -16,6 +17,7 @@ function changeFontColor(colorPicker)
 
     element.style.setProperty('color', color, 'important');
 
+    $('#dataFontColor').val(color);
 
 }
 function changeContainerSize(div) {
@@ -60,11 +62,13 @@ function checkFileLength(element) {
     var fits = true;
     if ((element.offsetHeight < element.scrollHeight) || (element.offsetWidth < element.scrollWidth)) {
         //element has overflow
-        element.style.border = "solid #FF0000";
+        $(element).removeClass("shadowSuccess");
+        $(element).addClass("shadowError");
         fits = false;
     }
     else {
-        element.style.border = "solid #00FF00";
+        $(element).removeClass("shadowError");
+        $(element).addClass("shadowSuccess");
         fits = true;
     }
 
@@ -81,6 +85,8 @@ function formatTextSize(element) {
         element.style.fontSize = fontSize + "px";
     } while (!checkFileLength(element) && fontSize != 2);
 
+    //update hidden input value
+    $('#dataFontSize').val(fontSize);
 }
 function generateCheatSheet() {
 
@@ -99,7 +105,6 @@ function generateCheatSheet() {
 
     window.print();
 
-    $('#cheatsheetData').val(previewContent.innerHTML);
     // html2canvas([previewContent], {
     //     onrendered: function(canvas) {
     //         document.body.appendChild(canvas);
@@ -128,6 +133,12 @@ function out() {
         console.log("i: " + i + " A: " + arguments[i] + "\n");
     }
 }
+
+// function mailTo(subject,message)
+// {
+//     window.open('mailto:support@csigg.com?subject=' + subject + '&body=' + message);
+// }
+
 // CONVERTERS
 
 function removeCRLF(string) {
@@ -143,5 +154,5 @@ function hexToRgb(hex) {
     rgb [1] = parseInt(result[2], 16);
     rgb[2] = parseInt(result[3], 16);
     return rgb;
-    //return "rgb(" + parseInt(result[1], 16) + ","+parseInt(result[2], 16) + "," + parseInt(result[3], 16) + ")";
 }
+

@@ -22,9 +22,9 @@
         <!-- small box -->
         <div class="small-box bg-blue">
             <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>{if isset($totalCheatSheets)}{$totalCheatSheets}{/if}</h3>
 
-                <p>New CheatSheets</p>
+                <p>CheatSheets</p>
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -36,7 +36,7 @@
         <!-- small box -->
         <div class="small-box bg-red">
             <div class="inner">
-                <h3>65</h3>
+                <h3>{if isset($totalInfographics)}{$totalInfographics}{/if}</h3>
 
                 <p>New Infographics</p>
             </div>

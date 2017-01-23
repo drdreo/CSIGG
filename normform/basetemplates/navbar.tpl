@@ -39,7 +39,7 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="settings.php">
+                        <a href="contact.php">
                             <span>Contact</span>
                         </a>
                     </li>

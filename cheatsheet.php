@@ -74,6 +74,15 @@ final class CheatSheet extends TNormForm {
      */
     protected function isValid() {
 
+        if(!isset($_POST['cheatsheetData']))
+        {
+            $this->errMsg['noData'] = "no data selected!";
+        }
+        if(!isset($_POST['cheatsheetData']) && $_POST['cheatsheetData'] == '')
+        {
+            $this->errMsg['noData'] = "No cheatsheet!";
+        }
+
         return (count($this->errMsg) === 0);
     }
 
@@ -86,30 +95,103 @@ final class CheatSheet extends TNormForm {
      */
     protected function process() {
 
-        //TODO: save cheatsheet as image in cheatsheet folder
 
-        $image = imagecreatetruecolor($_POST['widthDimension'], $_POST['heightDimension']);
-//        $image = imagecreatefrompng($_POST['cheatsheetData']);
+        $path = $this->createUniquePathName();
+
+        $width = $_POST['widthDimension']*4;
+        $height = $_POST['heightDimension']*4;
+
+        $image = imagecreatetruecolor($width, $height);
+
+        $bg = imagecolorallocate ( $image, 255, 255, 255 );
+        imagefilledrectangle($image,0,0,$width,$height,$bg);
+
+
         $text = $_POST['cheatsheetData'];
-        $color = imagecolorallocate($image, 0, 0, 0);
+        $fontSize = $_POST['dataFontSize'];
+        $fontSize = 7;
 
-        var_dump($_POST);
+        //get color and convert it
+        $rgb = $this->hex2rgb($_POST['dataFontColor']);
+        $color = imagecolorallocate($image, $rgb['r'], $rgb['g'], $rgb['b']);
 
-        imagettftext ( $image ,  12 ,  0 ,  1 , 1 ,  $color ,  'helvetica' ,  $text );
+
+        imagettftext ( $image ,  $fontSize ,  0 ,  0 , $fontSize ,  $color ,  "fonts/Open Sans 600.ttf" ,  $text );
 
 
-//        imagejpeg($image, "cheatsheets/file.jpg");
-        imagepng($image,"cheatsheets/file.jpg");
+        imagejpeg($image,$path);
         imagedestroy($image);
 
+
+        $this->insertUserCheatSheet($path);
+
         $this->statusMsg = "Added CheatSheet successfully";
+
         return true;
 
     }
 
+    /**
+     * Inserts the CheatSheet Data into the database. Sets path,created and user_iduser
+     *
+     * @throws DatabaseException wird von allen $this->dbAccess Methoden geworfen und hier nicht behandelt.
+     *         Die Exception wird daher nochmals weitergereicht (throw) und erst am Ende des Scripts behandelt.
+     */
+    protected function insertUserCheatSheet($path)
+    {
+        $sql_query = <<<SQL
+        INSERT INTO
+        cheatsheet
+        SET 
+        user_iduser = :uid,
+        path = :path,
+        created = NOW()
+SQL;
+        $this->dbAccess->prepareQuery($sql_query);
+        $this->dbAccess->executeStmt(array(':uid' => $_SESSION['iduser'],":path" => $path));
 
+    }
 
+    /**
+     * Creates a unique path name for the cheatsheet image
+     */
+    protected function createUniquePathName()
+    {
+        $extension = ".jpg";
+        $path = "cheatsheets/";
 
+        do{
+            $imagePath = $path . sha1(uniqid(mt_rand(),true)) . $extension;
+        }while(file_exists($imagePath));
+
+    return $imagePath;
+    }
+    /**
+     * Converstion function
+     */
+
+    function hex2rgb($hex, $alpha = false) {
+        $hex = str_replace('#', '', $hex);
+        if ( strlen($hex) == 6 ) {
+            $rgb['r'] = hexdec(substr($hex, 0, 2));
+            $rgb['g'] = hexdec(substr($hex, 2, 2));
+            $rgb['b'] = hexdec(substr($hex, 4, 2));
+        }
+        else if ( strlen($hex) == 3 ) {
+            $rgb['r'] = hexdec(str_repeat(substr($hex, 0, 1), 2));
+            $rgb['g'] = hexdec(str_repeat(substr($hex, 1, 1), 2));
+            $rgb['b'] = hexdec(str_repeat(substr($hex, 2, 1), 2));
+        }
+        else {
+            $rgb['r'] = '0';
+            $rgb['g'] = '0';
+            $rgb['b'] = '0';
+        }
+        if ( $alpha ) {
+            $rgb['a'] = $alpha;
+        }
+        return $rgb;
+    }
 }
 /**
  * Instantiieren der Klasse Shop und Aufruf der Methode TNormform::normForm()

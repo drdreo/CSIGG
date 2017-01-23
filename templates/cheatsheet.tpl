@@ -8,7 +8,6 @@
         </div>
         <div class="box-body">
             {include file="{$smarty.const.BASETEMPLATEPATH}error.tpl"}
-
             <div class="col-md-6 border-right">
                 {*DropZone*}
                 <div class="col-md-12 hidden-print">
@@ -24,16 +23,16 @@
                 {*Text Upload Preview*}
                 <div class="col-md-12 hidden-print">
                     <h3 class="pull-left">Preview</h3>
-                    <button class="btn btn-flat btn-primary btn-sm pull-right" style="margin-top:15px;"
-                            onclick="generateCheatSheet(); return false;">Generate
+                    <button id="generateBtn" class="btn btn-flat btn-primary btn-sm pull-right" style="margin-top:15px;"
+                            onclick="generateCheatSheet(); return false;" disabled>Generate
                     </button>
-                    <div class="box no-border shadow" id="filePreview2"
-                         style="min-height:100px; max-height: 350px; overflow: scroll;">
+                    <div class="box no-border no-shadow" id="filePreview2"
+                         style="min-height:200px; max-height: 350px; overflow: scroll;">
 
-                        {*Printed CheatSheet*}
+                        {*Preview CheatSheet*}
 
-                        <div class="box no-border shadow" id="filePreview"
-                             style="position:static; padding: 2px; width:80mm; height: 80mm; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-line;">
+                        <div class="" id="filePreview"
+                             style="position:static; margin:10px; padding: 2px; width:95%; height: 350px; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-line;">
                         </div>
 
                     </div>
@@ -74,7 +73,7 @@
                         <h4 style="color:#00a65a;">Color <i class="fa fa-eyedropper "></i></h4>
                         <div class="col-md-12">
                             <div id="colorpicker" class="input-group col-md-6" style="padding:5px;">
-                                <input type="text" value="#00AABB" class="form-control"/>
+                                <input type="text" value="#000000" class="form-control"/>
                                 <span class="input-group-addon"><i></i></span>
                             </div>
                         </div>
@@ -106,13 +105,15 @@
                     <form action="{$smarty.server.SCRIPT_NAME}" method="post" enctype="multipart/form-data"
                           class="form-horizontal">
                         <!-- Hidden data -->
-                        <input type="hidden" name="widthDimension" value=""/>
-                        <input type="hidden" name="heightDimension" value=""/>
-                        <input type="hidden" id="cheatsheetData" name="cheatsheetData" value=""/>
+                        <input type="hidden" id="widthDimension" name="widthDimension" value="76"/>
+                        <input type="hidden" id="heightDimension" name="heightDimension" value="76"/>
+                        <input type="hidden" id="dataFontSize" name="dataFontSize" value="50"/>
+                        <input type="hidden" id="dataFontColor" name="dataFontColor" value="#000000"/>
+                        <input type="hidden" id="cheatsheetData" name="cheatsheetData" value="PLACEHOLDER"/>
                         <!-- End hidden -->
                         {*Submit*}
                         <div class="box-footer no-border">
-                            <button type="submit" class="btn btn-success btn-flat pull-right">Save CS</button>
+                            <button id="submitBtn" type="submit" class="btn btn-success btn-flat pull-right" disabled>Save CS</button>
                         </div>
                     </form>
                 </div>
@@ -149,6 +150,9 @@
                     this.on('success', function (file, resp) {
                         console.log(file);
 
+                        //enable Generate and Submit Button after upload successfull
+                        $('#generateBtn').prop('disabled', false);
+                        $('#submitBtn').prop('disabled', false);
                         //Retrieve the first (and only!) File from the FileList object
                         var f = file;
 
@@ -163,11 +167,10 @@
                                 var filePreview = document.getElementById('filePreview');
                                 filePreview.innerHTML = contents;
 
-//                            var filePrintPreview = document.getElementById('filePrintPreview');
-//                            filePrintPreview .innerHTML = contents;
+                                //set the uploaded text to the hidden input field
+                                $('#cheatsheetData').val(contents);
 
                                 formatTextSize(filePreview);
-//                            formatTextSize(filePrintPreview);
                             };
                             reader.readAsText(f);
                         } else {
