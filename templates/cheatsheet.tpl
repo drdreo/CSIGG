@@ -148,7 +148,6 @@
                 init: function () {
                     //on successfull File upload
                     this.on('success', function (file, resp) {
-                        console.log(file);
 
                         //enable Generate and Submit Button after upload successfull
                         $('#generateBtn').prop('disabled', false);
@@ -162,8 +161,6 @@
                             reader.onload = function (e) {
 
                                 var contents = reader.result;
-
-                                console.log(contents);
 
                                 var filePreview = document.getElementById('filePreview');
                                 filePreview.innerHTML = contents;

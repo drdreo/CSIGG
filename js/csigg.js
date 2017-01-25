@@ -77,7 +77,7 @@ function checkFileLength(element) {
 
 function formatTextSize(element) {
 
-    var fontSize = 50;
+    var fontSize = 50; // start font size
     do
     {
         --fontSize;
@@ -105,14 +105,6 @@ function generateCheatSheet() {
 
     window.print();
 
-    // html2canvas([previewContent], {
-    //     onrendered: function(canvas) {
-    //         document.body.appendChild(canvas);
-    //         var data = canvas.toDataURL('image/png');
-    //
-    //     }
-    // });
-
 }
 
 
@@ -126,7 +118,7 @@ function copyFormat(element1, element2) {
     element2.innerHTML = element1.innerHTML;
 }
 
-//Output
+//Console Output
 
 function out() {
     for (var i = 0; i < arguments.length; i++) {
@@ -134,10 +126,6 @@ function out() {
     }
 }
 
-// function mailTo(subject,message)
-// {
-//     window.open('mailto:support@csigg.com?subject=' + subject + '&body=' + message);
-// }
 
 // CONVERTERS
 
