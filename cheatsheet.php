@@ -9,20 +9,18 @@ require_once DBACCESS;
 /**
  * Class CheatSheet implementiert den CheatSheet-Generator von CSIGG
  *
- * THe site cheatsheet.php builds on the objectorientated Class TNormform.
- * Weiters benötigt es die Klasse DBAccess für Datenbankzugriffe, die die Klasse FileAccess von IMAR ersetzt.
+ * Die Seite cheatsheet.php baut auf der objektorientierten Klasse TNormform auf.
+ * Weiters benötigt es die Klasse DBAccess für Datenbankzugriffe.
  * Durch die Verwendung von PDO Prepared Statements sind keine weiteren Maßnahmen gegen SQL-Injection notwendig.
  *
- * Diese Seite listet die Produkte des OnlineShops in einer Liste auf, die durchblättert werden kann.
- * Über die Konstante DISPLAY (@see includes/defines.inc.php) wird gesteuert, wieviele Produkte pro Seite angezeigt werden.
- * Über ein Suchfeld kann ein GET-Request abgesetzt werden, der die Anzahl der Treffer einschränkt.
- * Über Shop::addToCart() können Produkte über einen POST-Request in den Warenkorb Tabelle onlineshop.cart gelegt werden.
- * 
+ * Diese Seite lässt den Nutzer einen Text uploaden. Dieser kann formatiert und ausgedruckt werden.
+ * Wird das CheatSheet gespeichert so wird ein Bild von dem Text im process erstellt.
+ *
  * Die Klasse ist final, da es keinen Sinn macht, davon noch weitere Klassen abzuleiten.
  *
- * @author Martin Harrer <martin.harrer@fh-hagenberg.at>
- * @package onlineshop
- * @version 2016
+ * @author Andreas Hahn
+ * @package csigg
+ * @version 2017
  */
 
 final class CheatSheet extends TNormForm {
@@ -34,7 +32,7 @@ final class CheatSheet extends TNormForm {
 
 
     /**
-     * CheatSheet Constructor.
+     * CheatSheet Konstruktor.
      *
      * Ruft den Constructor der Klasse TNormform auf.
      * Erzeugt den Datenbankhandler mit der Datenbankverbindung
@@ -52,12 +50,10 @@ final class CheatSheet extends TNormForm {
      */
     protected function prepareFormFields() {
 
-
-
     }
 
     /**
-     * Shows the site with Smarty Templates
+     * Zeigt die Seite mittels Smarty Templates
      *
      * Abstracte Methode in der Klasse TNormform und muss daher hier implementiert werden
      */
@@ -67,7 +63,7 @@ final class CheatSheet extends TNormForm {
     }
 
     /**
-     * Nothing to be invalid
+     * Überprüft ob Text upgeloadet wurde und ob dieser nicht leer ist.
      * Abstracte Methode in der Klasse TNormform und muss daher hier implementiert werden
      *
      * @return bool true, wenn $errMsg leer ist. Ansonsten false
@@ -87,7 +83,7 @@ final class CheatSheet extends TNormForm {
     }
 
     /**
-     * Saves the created cheatsheet on the server folder "cheatsheets" as an image.
+     * Speichert das erstellte Cheatsheet auf dem Server unter "cheatsheets" als JPEG.
      * Abstracte Methode in der Klasse TNormform und muss daher hier implementiert werden
      *
      * @throws DatabaseException wird von allen $this->dbAccess Methoden geworfen und hier nicht behandelt.
@@ -96,13 +92,17 @@ final class CheatSheet extends TNormForm {
     protected function process() {
 
 
+        // einen einzigartigen Namen für das CheatSheet erstellen
         $path = $this->createUniquePathName();
 
+        //Dimension anpassen, da sonst pixelig
         $width = $_POST['widthDimension']*4;
         $height = $_POST['heightDimension']*4;
 
+        //erstellt das Bild
         $image = imagecreatetruecolor($width, $height);
 
+        //Hintergrundfarbe weiß
         $bg = imagecolorallocate ( $image, 255, 255, 255 );
         imagefilledrectangle($image,0,0,$width,$height,$bg);
 
@@ -115,16 +115,17 @@ final class CheatSheet extends TNormForm {
         $rgb = $this->hex2rgb($_POST['dataFontColor']);
         $color = imagecolorallocate($image, $rgb['r'], $rgb['g'], $rgb['b']);
 
-
+        //Text in das Bild schreiben
         imagettftext ( $image ,  $fontSize ,  0 ,  0 , $fontSize ,  $color ,  "fonts/Open Sans 600.ttf" ,  $text );
 
-
+        //Bild speichern
         imagejpeg($image,$path);
         imagedestroy($image);
 
-
+        //Bildpfad in Datenbank speichern
         $this->insertUserCheatSheet($path);
 
+        //Statusmessage erstellen
         $this->statusMsg = "Added CheatSheet successfully";
 
         return true;
@@ -141,11 +142,11 @@ final class CheatSheet extends TNormForm {
     {
         $sql_query = <<<SQL
         INSERT INTO
-        cheatsheet
+          cheatsheet
         SET 
-        user_iduser = :uid,
-        path = :path,
-        created = NOW()
+          user_iduser = :uid,
+          path = :path,
+          created = NOW()
 SQL;
         $this->dbAccess->prepareQuery($sql_query);
         $this->dbAccess->executeStmt(array(':uid' => $_SESSION['iduser'],":path" => $path));
@@ -194,9 +195,9 @@ SQL;
     }
 }
 /**
- * Instantiieren der Klasse Shop und Aufruf der Methode TNormform::normForm()
+ * Instantieren der Klasse CheatSheet und Aufruf der Methode TNormform::normForm()
  *
- * Datenbank-Exceptions werden erst hier abgefangen und eine formatierte DEBUG-Seite mit den Fehlermeldungen mit echo ausgegeben @see DBAcess::dbugSQL()
+ * Datenbank-Exceptions werden erst hier abgefangen
  * Bei PHP-Exception wird vorerst nur auf eine allgemeine Errorpage weitergeleitet
  */
 try {

@@ -43,7 +43,7 @@
                 <h3>CheatSheet</h3>
                 <div class="no-border shadow" id="filePrintPreview"
                      style="padding: 2px; width:287.244094488px; height: 287.244094488px; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-line;">
-                    <p>TEST text</p>
+                    <p></p>
                 </div>
             </div>
             <div class="col-md-6 hidden-print no-border">
@@ -153,6 +153,7 @@
                         //enable Generate and Submit Button after upload successfull
                         $('#generateBtn').prop('disabled', false);
                         $('#submitBtn').prop('disabled', false);
+
                         //Retrieve the first (and only!) File from the FileList object
                         var f = file;
 
@@ -177,19 +178,16 @@
                             alert("Failed to load file");
                         }
                     });
+
                     //Remove File from List Event
                     this.on("removedfile", function (file) {
                         $('#filePreview').html("");
                     });
-
-
                 }
-
-
             });
         });
 
-
     </script>
     <!-- /.content-wrapper -->
+
 {include file="{$smarty.const.BASETEMPLATEPATH}footer.tpl"}
