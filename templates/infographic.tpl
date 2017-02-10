@@ -23,7 +23,7 @@
                 {*Text Upload Preview*}
                 <div class="col-md-12">
                     <h3 class="pull-left hidden-print">RenderView</h3>
-                    <button class="btn btn-flat btn-warning pull-right btn-sm hidden-print" id="render" style="margin-top: 15px;" onclick="generateInfographic()">Render</button>
+                    <button class="btn btn-flat btn-warning pull-right btn-sm hidden-print" id="render" style="margin-top: 15px;" onclick="generateInfographic()" disabled>Render</button>
 
                     <div class="box no-border shadow" id="filePreview"
                          style="min-height:100px; overflow: scroll;">
@@ -180,6 +180,7 @@
                 this.on('success', function (file, resp) {
                     console.log(file);
 
+                    $('#render').prop('disabled', false);
 
                     //Retrieve the first (and only!) File from the FileList object
                     var f = file;
@@ -304,6 +305,9 @@
             var ctx = document.getElementById("myChart").getContext("2d");
             var cnt = config.data.datasets[0].data.length;
 
+            var red = [[255, 105, 97], [255, 28, 0], [255, 8, 0], [227, 66, 52], [215, 59, 62], [206, 22, 32], [204, 0, 0], [178, 34, 34], [179, 27, 27], [164, 0, 0], [128, 0, 0], [112, 28, 28]];
+            var blue = [[146, 161, 207], [42, 82, 190], [0, 0, 225], [0, 47, 167], [0, 51, 153], [0, 0, 156], [18, 10, 134], [0, 0, 139], [0, 0, 128], [25, 25, 112], [8, 37, 103]];
+            var green = [[0, 204, 153], [80, 200, 120], [62, 180, 137], [3, 192, 60], [0, 168, 107], [0, 117, 94], [23, 114, 69], [0, 107, 60], [1, 68, 33], [0, 66, 37], [1, 50, 32]];
 
             if(color instanceof Array){
                 var colorpicker = color;
@@ -325,22 +329,48 @@
                 default: r= 80; g=80; b =80; break;
             }
 
-
             if(type == 'line')
-                    {
-                        cnt = config.data.datasets.length;
-                    }
-
-            var vl = 230/cnt;
-
-            for(var i = 0; i < cnt; i++)
             {
+                cnt = config.data.datasets.length;
+            }
 
-                if(g>0) g = g - vl;
-                if(r>0) r = r - vl;
-                if(b>0) b = b - vl;
-                backgroundColor.push('rgba('+r+','+g+','+b+',0.7)');
-                borderColor.push('rgba('+r+','+g+','+b+',1.0)')
+
+            if(color == 'custom') {
+                for (var j = 0; j < cnt; j++) {
+                    if (g > 0) g = g - 30;
+                    if (r > 0) r = r - 30;
+                    if (b > 0) b = b - 30;
+                    backgroundColor.push('rgba(' + r + ',' + g + ',' + b + ',0.7)');
+                    borderColor.push('rgba(' + r + ',' + g + ',' + b + ',1.0)')
+                }
+            }
+
+            if(color == 'red') {
+                for (var k = 0; k < cnt; k++) {
+
+                    if(k == 12) k = 0;
+
+                    backgroundColor.push('rgba(' + red[k][0] + ',' + red[k][1] + ',' + red[k][2] + ',0.7)');
+                    borderColor.push('rgba(' + red[k][0] + ',' + red[k][1] + ',' + red[k][2] + ',1.0)')
+                }
+            }
+            if(color == 'blue') {
+                for (var l = 0; l < cnt; l++) {
+
+                    if(l == 12) l = 0;
+
+                    backgroundColor.push('rgba(' + blue[l][0] + ',' + blue[l][1] + ',' + blue[l][2] + ',0.7)');
+                    borderColor.push('rgba(' + blue[l][0] + ',' + blue[l][1] + ',' + blue[l][2] + ',1.0)')
+                }
+            }
+            if(color == 'green') {
+                for (var m = 0; m < cnt; m++) {
+
+                    if(m == 12) m = 0;
+
+                    backgroundColor.push('rgba(' + green[m][0] + ',' + green[m][1] + ',' + green[m][2] + ',0.7)');
+                    borderColor.push('rgba(' + green[m][0] + ',' + green[m][1] + ',' + green[m][2] + ',1.0)')
+                }
             }
 
             for (var i = 0; i < config.data.datasets.length; i++)
@@ -353,27 +383,9 @@
                 } else {
                     config.data.datasets[i].borderWidth = 0;
                 }
-
             }
             myChart.update();
         }
-
-/*
-        function getColor(color, cnt)
-        {
-
-            for (var i = 0, i < cnt;i++)
-            {
-
-            }
-
-            var custom[];
-
-            var red = [[255,105,97],[255,28,0],[255,8,0],[227,66,52],[215,59,62],[206, 22, 32],[204, 0, 0],[178, 34, 34],[179, 27, 27],[164, 0, 0],[128, 0, 0],[112, 28, 28]];
-            var blue = [[146, 161, 207],[42, 82, 190],[0, 0, 225],[0, 47, 167],[0, 51, 153],[0, 0, 156],[18, 10, 134],[0, 0, 139],[0, 0, 128],[25, 25, 112],[8, 37, 103]];
-            var green = [[0, 204, 153],[80, 200, 120],[62, 180, 137],[3, 192, 60],[0, 168, 107],[0, 117, 94],[23, 114, 69],[0, 107, 60],[1, 68, 33],[0, 66, 37],[1, 50, 32]];
-        }
-*/
 
         function changeFillofLine(fill) {
 
@@ -382,7 +394,6 @@
 
             for(var i = 0; i < data.length; i++)
             {
-
                 config.data.datasets[i].fill = fill;
             }
             destroyChart(ctx,config);
@@ -405,12 +416,10 @@
 
         function changeType(newType) {
             var ctx = document.getElementById("myChart").getContext("2d");
-
-
             config.type = newType;
 
             switch (newType)
-                    {
+            {
                 case 'pie': fillLineDatasets();
                     break;
                 case 'bar': fillBarPieDatasets();
@@ -418,11 +427,8 @@
                 case 'line': fillLineDatasets();
                     break;
             }
-
             var color = $('.color-scheme-selected').attr('id');
-
             changeColor(color,newType);
-
             destroyChart(ctx,config);
         }
 
@@ -438,9 +444,7 @@
                 }
                 globalData.push(dataChart);
             }
-
         }
-
 
         function fillBarPieDatasets() {
 
@@ -455,16 +459,13 @@
                 for (var j = 0; j < data.length; j++) {
                     dataChart.push(data[j][i]);
                 }
-                datasets.push(fill('Dataset'+i,dataChart));
+                datasets.push(fill('User'+i,dataChart));
             }
 
             config.data.datasets = datasets;
-
             fillLabels(data);
-
             destroyChart(ctx,config);
         }
-
 
         function fillLineDatasets() {
             var ctx = document.getElementById("myChart").getContext("2d");
@@ -478,8 +479,7 @@
                 for (var j = 0; j < data[0].length; j++) {
                     dataChart.push(data[i][j+1]);
                 }
-                datasets.push(fill('Dataset'+i,dataChart));
-
+                datasets.push(fill(data[i][0],dataChart));
             }
 
             config.data.datasets = datasets;
@@ -534,7 +534,6 @@
             if (myChart) {
                 myChart.destroy();
             }
-
             myChart = new Chart(ctx, config);
         }
 
@@ -549,7 +548,6 @@
                 borderColor:[],
                 borderWidth: 1
             };
-
             return json;
         }
     });

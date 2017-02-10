@@ -2,7 +2,11 @@
  * Created by Andreas on 03.12.16.
  */
 
-//Allrounder
+//Allrounder INFGRAPHIC
+
+
+
+//Allrounder CHEATSHEETS
 function changeFont(font) {
     console.log(font);
     var element = document.getElementById('filePreview');

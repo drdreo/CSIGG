@@ -8,21 +8,11 @@ require_once DBACCESS;
 
 /**
  * Class Contact implementiert die Startseite (contact.php) von CSIGG
- *
- * Die Seite index.php setzt auf der ojectorientieren Klasse TNormform und den Smarty-Templates von IMAR aus HM2 auf.
- * Weiters benötigt es die Klasse DBAccess für Datenbankzugriffe, die die Klasse FileAccess von IMAR ersetzt.
  * Durch die Verwendung von PDO Prepared Statements sind keine weiteren Maßnahmen gegen SQL-Injection notwendig.
  *
- * Diese Seite listet die Produkte des OnlineShops in einer Liste auf, die durchblättert werden kann.
- * Über die Konstante DISPLAY (@see includes/defines.inc.php) wird gesteuert, wieviele Produkte pro Seite angezeigt werden.
- * Über ein Suchfeld kann ein GET-Request abgesetzt werden, der die Anzahl der Treffer einschränkt.
- * Über Shop::addToCart() können Produkte über einen POST-Request in den Warenkorb Tabelle onlineshop.cart gelegt werden.
  *
  * Die Klasse ist final, da es keinen Sinn macht, davon noch weitere Klassen abzuleiten.
  *
- * @author Martin Harrer <martin.harrer@fh-hagenberg.at>
- * @package onlineshop
- * @version 2016
  */
 
 final class Contact extends TNormForm {
@@ -45,19 +35,7 @@ final class Contact extends TNormForm {
 
     }
 
-    /**
-     * Weist die Inhalte der Smarty-Variablen zu. @see templates/indexMain.tpl
-     *
-     * Gibt die Namen der AddToCart input-Buttons <input type='submit' name='' ... > und damit die Keynamen des Array $_POST vor.
-     * Die Namen der GET-Parameter für das Suchfeld und für die Blätterfunktion und damit die Keynamen im Array $_GET werden ebenfalls vorgegeben.
-     *
-     * Das Array pageArray wird mit allen Einträge der Tabelle onlineshop.product_category befüllt.
-     * Der Aufruf von Shop::fillpageArray() berechnet auch die Variablen für die Blätterfunktion $this->pagecount, pagenumber, current_page, startprevious und startnext.
-     * Diese werden an dieser Stelle nur noch an die Klasse Smarty weitergegeben.
-     * Die Variable $this->search für die Vorbelegung des Suchbegriffs wird ebenfalls von Shop::fillpageArray() befüllt und hier an die Klasse Smarty übergeben.
-     *
-     * Abstracte Methode in der Klasse TNormform und muss daher hier implementiert werden
-     */
+
     protected function prepareFormFields() {
 
         $this->smarty->assign('subjectKey', self::SUBJECT);
@@ -68,7 +46,6 @@ final class Contact extends TNormForm {
 
     /**
      * Zeigt die Seite mittels Smarty Templates an
-     *
      * Abstracte Methode in der Klasse TNormform und muss daher hier implementiert werden
      */
     protected function display() {
@@ -77,13 +54,10 @@ final class Contact extends TNormForm {
     }
 
     /**
-     * Validiert den Benutzerinput nach dem Abschicken einer Bestellung durch einen der Buttons AddToCart.
+     * Validiert den Benutzerinput nach dem Abschicken einer Nachricht.
      *
-
      * Fehlermeldungen werden im Array $errMsg[] gesammelt.
-     *
      * Abstracte Methode in der Klasse TNormform und muss daher hier implementiert werden
-     *
      * @return bool true, wenn $errMsg leer ist. Ansonsten false
      */
     protected function isValid() {
@@ -102,14 +76,6 @@ final class Contact extends TNormForm {
 
     /**
      * Verarbeitet die Benutzereingaben, die mit POST geschickt wurden
-     *
-     * Das Suchfeld wird mit GET übergeben und daher nicht hier behandelt.
-     * Die AddToCart - Buttons sind in ein POST-Formular verpackt nicht als Hyperlinks mit GET-Parametern.
-     * Das ist abhängig vom Shopsystem, wie das in der Praxis gehandhabt wird. Es gibt POST und GET-Implementierungen.
-     * Wir nehmen POST, weil wir die TNormformabläufe schon kennen, die auf POST ausgelegt sind.
-     *
-     * Über Shop::addToCart() wird das ausgewählte Produkt in den Warenkorb Tabelle onlineshop.cart gespeichert.
-     * Im Gutfall wird in $this->statusMsg eine Rückmeldung gegeben, welches Produkt in den Warenkorb gelegt wurde.
      *
      * Abstracte Methode in der Klasse TNormform und muss daher hier implementiert werden
      *

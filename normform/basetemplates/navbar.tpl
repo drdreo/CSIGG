@@ -28,12 +28,6 @@
                         </a>
                     </li>
                     <li class="">
-                        <a>
-                            <span> <button onclick="$('header').hide(); $('aside').hide();">hide</button></span>
-                        </a>
-                    </li>
-
-                    <li class="">
                         <a href="profile.php">
                             <span>Profile</span>
                         </a>

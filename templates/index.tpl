@@ -23,39 +23,10 @@
         <div class="small-box bg-blue">
             <div class="inner">
                 <h3>{if isset($totalCheatSheets)}{$totalCheatSheets}{/if}</h3>
-
-                <p>CheatSheets</p>
+                <p>Total CheatSheets</p>
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
-            </div>
-        </div>
-    </div>
-    {*New Infographics*}
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-red">
-            <div class="inner">
-                <h3>{if isset($totalInfographics)}{$totalInfographics}{/if}</h3>
-
-                <p>New Infographics</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-            </div>
-        </div>
-    </div>
-    {*New Infographics*}
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-green">
-            <div class="inner">
-                <h3>65</h3>
-
-                <p>Total</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-pie-graph"></i>
             </div>
         </div>
     </div>

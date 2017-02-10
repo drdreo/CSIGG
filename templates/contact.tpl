@@ -1,7 +1,7 @@
 {include file="{$smarty.const.BASETEMPLATEPATH}header.tpl"}  
 {include file="{$smarty.const.BASETEMPLATEPATH}navbar.tpl"}
 
-<div class="content-wrapper" style="min-height: 670px;">
+<div class="content-wrapper" style="min-height: 820px;">
     <div class="content-header col-md-12">
 
         <h1><i class="fa fa-envelope"></i> Contact</h1>
@@ -47,10 +47,6 @@
                             <tr>
                                 <td>Email</td>
                                 <td>andreas@fh-hagenberg.at <br>sarah@fh-hagenberg.at</td>
-                            </tr>
-                            <tr>
-                                <td>Fax</td>
-                                <td>who the fax still owns one?</td>
                             </tr>
                         </table>
                     </div>
